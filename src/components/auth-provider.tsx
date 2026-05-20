@@ -17,21 +17,29 @@ interface AuthProviderProps {
  * without relying solely on the persisted Zustand slice.
  */
 export function AuthProvider({ children }: AuthProviderProps) {
-  const { setUser, setLoading } = useAuthStore();
+  const { token, setUser, setLoading, _hasHydrated } = useAuthStore();
 
   useEffect(() => {
+    if (!_hasHydrated) return;
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     apiClient
       .get<{ user: AuthUser }>("/auth/me")
       .then((res) => {
+        // Keeps user profile active and updates details from server
         setUser(res.data.user);
       })
       .catch(() => {
-        // 401 → not logged in; clear any stale persisted state
-        setUser(null);
+        // 401/expired → clear stale token & user state
+        setUser(null, null);
       });
-  }, [setUser, setLoading]);
+  }, [token, _hasHydrated, setUser, setLoading]);
 
   return <>{children}</>;
 }

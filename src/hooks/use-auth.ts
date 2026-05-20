@@ -5,6 +5,7 @@ import type { AuthUser } from "@/types";
 
 interface AuthResponse {
   user: AuthUser;
+  token: string;
   error?: string;
 }
 
@@ -15,10 +16,10 @@ export function useLoginMutation() {
   return useMutation({
     mutationFn: async (credentials: Record<string, string>) => {
       const { data } = await apiClient.post<AuthResponse>("/auth/login", credentials);
-      return data.user;
+      return data;
     },
-    onSuccess: (user) => {
-      setUser(user);
+    onSuccess: (data) => {
+      setUser(data.user, data.token);
       // Invalidate queries that depend on auth state, like feed
       queryClient.invalidateQueries();
     },
@@ -32,10 +33,10 @@ export function useRegisterMutation() {
   return useMutation({
     mutationFn: async (userData: Record<string, string>) => {
       const { data } = await apiClient.post<AuthResponse>("/auth/register", userData);
-      return data.user;
+      return data;
     },
-    onSuccess: (user) => {
-      setUser(user);
+    onSuccess: (data) => {
+      setUser(data.user, data.token);
       queryClient.invalidateQueries();
     },
   });

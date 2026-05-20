@@ -31,7 +31,7 @@ export const useMovieSearch = (query: string) => {
   });
 };
 
-export const useMovie = (id: number) => {
+export const useMovie = (id: number, initialData?: Movie) => {
   return useQuery({
     queryKey: ['movies', id],
     queryFn: async () => {
@@ -39,6 +39,7 @@ export const useMovie = (id: number) => {
       return mapMovie(res.data);
     },
     enabled: !!id,
+    initialData,
   });
 };
 

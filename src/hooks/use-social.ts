@@ -38,7 +38,7 @@ export interface FollowUser extends User {
 
 // ─── Queries ─────────────────────────────────────────────────────────────
 
-export const useUserProfile = (userId: number) => {
+export const useUserProfile = (userId: number, initialData?: UserProfile) => {
   return useQuery({
     queryKey: ['users', userId],
     queryFn: async () => {
@@ -46,6 +46,7 @@ export const useUserProfile = (userId: number) => {
       return data;
     },
     enabled: !!userId,
+    initialData,
   });
 };
 

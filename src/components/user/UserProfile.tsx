@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import {
+  UserProfile as UserProfileData,
   useUserProfile,
   useUserReviews,
   useUserWatchlist,
@@ -12,6 +13,7 @@ import {
 import { UserAvatar } from './UserAvatar';
 import { FollowButton } from './FollowButton';
 import { UserCard } from './UserCard';
+import { useAuthStore } from '@/stores/auth-store';
 import { ReviewCard } from '@/components/review/ReviewCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MovieCard } from '@/components/movie/MovieCard';
@@ -23,6 +25,7 @@ type Tab = 'reviews' | 'watchlist' | 'watched' | 'followers' | 'following';
 interface UserProfileProps {
   userId: number;
   isOwnProfile?: boolean;
+  initialData?: UserProfileData | null;
 }
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
@@ -33,9 +36,12 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'following', label: 'Following', icon: <UserCheckIcon className="w-4 h-4" /> },
 ];
 
-export function UserProfile({ userId, isOwnProfile = false }: UserProfileProps) {
+export function UserProfile({ userId, isOwnProfile = false, initialData }: UserProfileProps) {
   const [activeTab, setActiveTab] = useState<Tab>('reviews');
-  const { data: user, isLoading: isUserLoading } = useUserProfile(userId);
+  const { user: loggedInUser, _hasHydrated } = useAuthStore();
+  const { data: user, isLoading: isUserLoading } = useUserProfile(userId, initialData || undefined);
+
+  const actualIsOwnProfile = isOwnProfile || (loggedInUser !== null && loggedInUser.id === userId);
 
   if (isUserLoading) {
     return (
@@ -114,7 +120,7 @@ export function UserProfile({ userId, isOwnProfile = false }: UserProfileProps) 
           </div>
         </div>
 
-        {!isOwnProfile && (
+        {_hasHydrated && !actualIsOwnProfile && (
           <div className="mt-4 md:mt-0">
             <FollowButton userId={user.id} isFollowing={user.isFollowing} className="w-full md:w-auto" />
           </div>
