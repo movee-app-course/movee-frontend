@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { MoviePageClient } from "@/components/movie/MoviePageClient";
 import { endpoints } from "@/lib/api/endpoints";
 import type { Movie } from "@/types";
@@ -9,9 +10,12 @@ interface MoviePageProps {
 export default async function MoviePage({ params }: MoviePageProps) {
   const { id } = await params;
 
+  const movieId = Number(id);
+  if (isNaN(movieId)) notFound();
+
   let initialMovieData: Movie | null = null;
   try {
-    const res = await fetch(endpoints.movies.byId(Number(id)), {
+    const res = await fetch(endpoints.movies.byId(movieId), {
       next: { revalidate: 30 }, // Cache movie details for 30s
     });
 
@@ -38,7 +42,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   return (
     <MoviePageClient
-      movieId={parseInt(id, 10)}
+      movieId={movieId}
       initialMovieData={initialMovieData}
     />
   );
