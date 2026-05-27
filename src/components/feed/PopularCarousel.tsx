@@ -2,6 +2,7 @@ import { PopularMovieStats } from '@/hooks/use-feed';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from 'lucide-react';
+import { tmdbImage } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -38,9 +39,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
       <ScrollArea className="w-full whitespace-nowrap pb-4">
         <div className="flex w-max space-x-4 px-1">
           {movies.map((movie) => {
-            const posterUrl = movie.poster_path 
-              ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-              : '/placeholder-poster.png';
+            const posterUrl = tmdbImage(movie.poster_path, 'w200') || '/placeholder-poster.png';
 
             return (
               <Link 

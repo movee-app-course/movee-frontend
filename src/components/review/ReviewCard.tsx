@@ -2,6 +2,7 @@ import { Review } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
 import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from 'lucide-react';
 import { SpoilerToggle } from './SpoilerToggle';
+import { tmdbImage } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -12,9 +13,7 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
-  const posterUrl = review.movie?.poster_path
-    ? `https://image.tmdb.org/t/p/w92${review.movie.poster_path}`
-    : null;
+  const posterUrl = tmdbImage(review.movie?.poster_path, 'w92');
 
   return (
     <div className="group p-4 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 animate-in-up">

@@ -2,19 +2,16 @@ import Image from 'next/image';
 import { Movie } from '@/types';
 import { format } from 'date-fns';
 import { StarIcon } from 'lucide-react';
+import { tmdbImage } from '@/lib/utils';
 
 interface MovieDetailsProps {
   movie: Movie;
 }
 
 export function MovieDetails({ movie }: MovieDetailsProps) {
-  const posterUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : null;
+  const posterUrl = tmdbImage(movie.poster_path, 'w500');
 
-  const backdropUrl = movie.backdrop_path
-    ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
-    : null;
+  const backdropUrl = tmdbImage(movie.backdrop_path, 'w1280');
 
   return (
     <div className="relative">

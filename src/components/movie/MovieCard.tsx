@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Movie } from '@/types';
 import { StarIcon, FilmIcon } from 'lucide-react';
+import { tmdbImage } from '@/lib/utils';
 
 interface MovieCardProps {
   movie: Movie;
@@ -9,9 +10,7 @@ interface MovieCardProps {
 
 export function MovieCard({ movie }: MovieCardProps) {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : null;
-  const posterUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : null;
+  const posterUrl = tmdbImage(movie.poster_path, 'w500');
 
   return (
     <Link href={`/movie/${movie.tmdb_id}`} className="group block">
