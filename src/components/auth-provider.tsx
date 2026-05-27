@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { isAxiosError } from "axios";
 import apiClient from "@/lib/api-client";
 import { endpoints } from "@/lib/api/endpoints";
 import { useAuthStore } from "@/stores/auth-store";
@@ -36,9 +37,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         // Keeps user profile active and updates details from server
         setUser(res.data.user);
       })
-      .catch(() => {
-        // 401/expired → clear stale token & user state
-        setUser(null, null);
+      .catch((err) => {
+        if (isAxiosError(err) && err.response?.status === 401) {
+          // 401/expired → clear stale token & user state
+          setUser(null, null);
+        } else {
+          // On network error: keep current state, finish loading
+          setLoading(false);
+        }
       });
   }, [token, _hasHydrated, setUser, setLoading]);
 
