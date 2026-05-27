@@ -8,13 +8,13 @@ interface MovieCardProps {
 }
 
 export function MovieCard({ movie }: MovieCardProps) {
-  const year = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : null;
-  const posterUrl = movie.posterPath
-    ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
+  const year = movie.release_date ? new Date(movie.release_date).getFullYear() : null;
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : null;
 
   return (
-    <Link href={`/movie/${movie.tmdbId}`} className="group block">
+    <Link href={`/movie/${movie.tmdb_id}`} className="group block">
       <div className="overflow-hidden rounded-xl border bg-card shadow-sm transition-all duration-200 group-hover:shadow-lg group-hover:-translate-y-0.5 group-hover:border-primary/30">
         <div className="relative aspect-[2/3] w-full bg-muted overflow-hidden">
           {posterUrl ? (
@@ -31,10 +31,10 @@ export function MovieCard({ movie }: MovieCardProps) {
               <span className="text-xs opacity-50">No Poster</span>
             </div>
           )}
-          {movie.voteAverage !== null && movie.voteAverage !== undefined && Number(movie.voteAverage) > 0 && (
+          {movie.vote_average !== null && movie.vote_average !== undefined && Number(movie.vote_average) > 0 && (
             <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
               <StarIcon className="w-3 h-3 fill-amber-400 text-amber-400" />
-              {Number(movie.voteAverage).toFixed(1)}
+              {Number(movie.vote_average).toFixed(1)}
             </div>
           )}
           {/* Gradient overlay on hover */}

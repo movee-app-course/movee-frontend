@@ -13,15 +13,15 @@ export interface User {
 
 export interface Movie {
   id: number;
-  tmdbId: number;
+  tmdb_id: number;
   title: string;
-  originalTitle: string | null;
+  original_title: string | null;
   overview: string | null;
-  posterPath: string | null;
-  backdropPath: string | null;
-  releaseDate: string | null;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  release_date: string | null;
   genres: { id: number; name: string }[];
-  voteAverage: number | null;
+  vote_average: number | string | null;
 }
 
 export interface Rating {

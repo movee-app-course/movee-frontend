@@ -38,14 +38,14 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
       <ScrollArea className="w-full whitespace-nowrap pb-4">
         <div className="flex w-max space-x-4 px-1">
           {movies.map((movie) => {
-            const posterUrl = movie.posterPath 
-              ? `https://image.tmdb.org/t/p/w200${movie.posterPath}`
+            const posterUrl = movie.poster_path 
+              ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
               : '/placeholder-poster.png';
 
             return (
               <Link 
                 key={movie.id} 
-                href={`/movie/${movie.tmdbId}`}
+                href={`/movie/${movie.tmdb_id}`}
                 className="w-[120px] shrink-0 group"
               >
                 <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md bg-muted">

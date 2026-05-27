@@ -12,8 +12,8 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
-  const posterUrl = review.movie?.posterPath
-    ? `https://image.tmdb.org/t/p/w92${review.movie.posterPath}`
+  const posterUrl = review.movie?.poster_path
+    ? `https://image.tmdb.org/t/p/w92${review.movie.poster_path}`
     : null;
 
   return (
@@ -21,7 +21,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
       {/* Movie info strip (if showMovie and movie available) */}
       {showMovie && review.movie && (
         <Link
-          href={`/movie/${review.movie.tmdbId}`}
+          href={`/movie/${review.movie.tmdb_id}`}
           className="flex items-center gap-2 mb-3 pb-3 border-b text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           {posterUrl ? (
@@ -38,9 +38,9 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
             </div>
           )}
           <span className="font-medium line-clamp-1">{review.movie.title}</span>
-          {review.movie.releaseDate && (
+          {review.movie.release_date && (
             <span className="shrink-0 text-xs opacity-70">
-              {new Date(review.movie.releaseDate).getFullYear()}
+              {new Date(review.movie.release_date).getFullYear()}
             </span>
           )}
         </Link>

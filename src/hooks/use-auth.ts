@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
 import { endpoints } from "@/lib/api/endpoints";
 import { useAuthStore } from "@/stores/auth-store";
-import type { AuthUser } from "@/types";
+import type { AuthUser, LoginPayload, RegisterPayload } from "@/types";
 
 interface AuthResponse {
   user: AuthUser;
@@ -15,7 +15,7 @@ export function useLoginMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (credentials: Record<string, string>) => {
+    mutationFn: async (credentials: LoginPayload) => {
       const { data } = await apiClient.post<AuthResponse>(endpoints.auth.login, credentials);
       return data;
     },
@@ -32,7 +32,7 @@ export function useRegisterMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (userData: Record<string, string>) => {
+    mutationFn: async (userData: RegisterPayload) => {
       const { data } = await apiClient.post<AuthResponse>(endpoints.auth.register, userData);
       return data;
     },

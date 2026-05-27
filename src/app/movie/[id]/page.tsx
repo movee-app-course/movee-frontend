@@ -22,18 +22,8 @@ export default async function MoviePage({ params }: MoviePageProps) {
     if (res.ok) {
       const rawMovie = await res.json();
       initialMovieData = {
-        id: rawMovie.id,
-        tmdbId: rawMovie.tmdb_id,
-        title: rawMovie.title,
-        originalTitle: rawMovie.original_title,
-        overview: rawMovie.overview,
-        posterPath: rawMovie.poster_path,
-        backdropPath: rawMovie.backdrop_path,
-        releaseDate: rawMovie.release_date,
+        ...rawMovie,
         genres: rawMovie.genres || [],
-        voteAverage: rawMovie.vote_average
-          ? parseFloat(rawMovie.vote_average)
-          : null,
       };
     }
   } catch (err) {

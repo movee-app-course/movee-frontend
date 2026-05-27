@@ -1,30 +1,19 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../lib/api-client';
 import { endpoints } from '../lib/api/endpoints';
-import { Movie, MovieStats } from '../types';
+import type { Movie, MovieStats } from '../types';
+import type { RawMovieSearchResponse } from '../types/api-responses';
 
 // The backend returns raw database rows with snake_case.
-// We map it to the camelCase Movie interface defined in architecture.
-const mapMovie = (data: any): Movie => ({
-  id: data.id,
-  tmdbId: data.tmdb_id,
-  title: data.title,
-  originalTitle: data.original_title,
-  overview: data.overview,
-  posterPath: data.poster_path,
-  backdropPath: data.backdrop_path,
-  releaseDate: data.release_date,
-  genres: data.genres || [],
-  voteAverage: data.vote_average ? parseFloat(data.vote_average) : null,
-});
+// We use the camelCase Movie interface defined in architecture.
 
 export const useMovieSearch = (query: string) => {
   return useQuery({
     queryKey: ['movies', 'search', query],
     queryFn: async () => {
       if (!query) return [];
-      const res = await apiClient.get<{ results: any[] }>(endpoints.movies.search(query));
-      return res.data.results.map(mapMovie);
+      const res = await apiClient.get<RawMovieSearchResponse>(endpoints.movies.search(query));
+      return res.data.results;
     },
     enabled: !!query,
   });
@@ -34,8 +23,8 @@ export const useMovie = (id: number, initialData?: Movie) => {
   return useQuery({
     queryKey: ['movies', id],
     queryFn: async () => {
-      const res = await apiClient.get<any>(endpoints.movies.byId(id));
-      return mapMovie(res.data);
+      const res = await apiClient.get<Movie>(endpoints.movies.byId(id));
+      return res.data;
     },
     enabled: !!id,
     initialData,

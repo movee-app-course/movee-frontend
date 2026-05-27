@@ -16,12 +16,12 @@ export interface UserProfile extends User {
 
 export interface UserStatsMovie {
   id: number;
-  tmdbId: number;
+  tmdb_id: number;
   title: string;
-  originalTitle: string | null;
-  posterPath: string | null;
-  releaseDate: string | null;
-  voteAverage: number | null;
+  original_title: string | null;
+  poster_path: string | null;
+  release_date: string | null;
+  vote_average: number | string | null;
 }
 
 export interface WatchlistMovie extends UserStatsMovie {

@@ -8,12 +8,12 @@ interface MovieDetailsProps {
 }
 
 export function MovieDetails({ movie }: MovieDetailsProps) {
-  const posterUrl = movie.posterPath
-    ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : null;
 
-  const backdropUrl = movie.backdropPath
-    ? `https://image.tmdb.org/t/p/w1280${movie.backdropPath}`
+  const backdropUrl = movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
     : null;
 
   return (
@@ -56,20 +56,20 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <div className="flex flex-col flex-grow min-w-0">
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-1">{movie.title}</h1>
 
-          {movie.originalTitle && movie.originalTitle !== movie.title && (
-            <p className="text-lg text-muted-foreground mb-3">{movie.originalTitle}</p>
+          {movie.original_title && movie.original_title !== movie.title && (
+            <p className="text-lg text-muted-foreground mb-3">{movie.original_title}</p>
           )}
 
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            {movie.releaseDate && (
+            {movie.release_date && (
               <span className="text-sm font-semibold text-muted-foreground">
-                {format(new Date(movie.releaseDate), 'yyyy')}
+                {format(new Date(movie.release_date), 'yyyy')}
               </span>
             )}
-            {movie.voteAverage && movie.voteAverage > 0 && (
+            {movie.vote_average && Number(movie.vote_average) > 0 && (
               <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 text-xs font-bold px-2 py-0.5 rounded-md">
                 <StarIcon className="w-3 h-3 fill-current" />
-                {movie.voteAverage.toFixed(1)} TMDB
+                {Number(movie.vote_average).toFixed(1)} TMDB
               </span>
             )}
             {movie.genres && movie.genres.length > 0 && (

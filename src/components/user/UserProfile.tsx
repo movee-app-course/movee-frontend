@@ -229,7 +229,7 @@ function WatchlistTab({ userId }: { userId: number }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {data.movies.map(movie => (
-        <MovieCard key={movie.id} movie={{ overview: null, backdropPath: null, genres: [], ...movie, tmdbId: movie.tmdbId ?? movie.id }} />
+        <MovieCard key={movie.id} movie={{ overview: null, backdrop_path: null, genres: [], ...movie, tmdb_id: movie.tmdb_id ?? movie.id }} />
       ))}
     </div>
   );
@@ -245,7 +245,7 @@ function WatchedTab({ userId }: { userId: number }) {
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {data.movies.map(movie => (
         <div key={movie.id} className="relative">
-          <MovieCard movie={{ overview: null, backdropPath: null, genres: [], ...movie, tmdbId: movie.tmdbId ?? movie.id }} />
+          <MovieCard movie={{ overview: null, backdrop_path: null, genres: [], ...movie, tmdb_id: movie.tmdb_id ?? movie.id }} />
           {movie.myScore && (
             <div className="absolute top-2 left-2 bg-black/75 text-white text-xs font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
               ★ {movie.myScore}

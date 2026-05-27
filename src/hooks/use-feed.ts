@@ -40,9 +40,9 @@ export function usePersonalFeed() {
 
 export interface PopularMovieStats {
   id: number;
-  tmdbId: number;
+  tmdb_id: number;
   title: string;
-  posterPath: string | null;
+  poster_path: string | null;
   ratingCount: number;
   averageScore: number;
 }
