@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import apiClient from "@/lib/api-client";
+import { endpoints } from "@/lib/api/endpoints";
 import { useAuthStore } from "@/stores/auth-store";
 import type { AuthUser } from "@/types";
 
@@ -30,7 +31,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLoading(true);
 
     apiClient
-      .get<{ user: AuthUser }>("/auth/me")
+      .get<{ user: AuthUser }>(endpoints.auth.me)
       .then((res) => {
         // Keeps user profile active and updates details from server
         setUser(res.data.user);

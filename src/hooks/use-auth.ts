@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
+import { endpoints } from "@/lib/api/endpoints";
 import { useAuthStore } from "@/stores/auth-store";
 import type { AuthUser } from "@/types";
 
@@ -15,7 +16,7 @@ export function useLoginMutation() {
 
   return useMutation({
     mutationFn: async (credentials: Record<string, string>) => {
-      const { data } = await apiClient.post<AuthResponse>("/auth/login", credentials);
+      const { data } = await apiClient.post<AuthResponse>(endpoints.auth.login, credentials);
       return data;
     },
     onSuccess: (data) => {
@@ -32,7 +33,7 @@ export function useRegisterMutation() {
 
   return useMutation({
     mutationFn: async (userData: Record<string, string>) => {
-      const { data } = await apiClient.post<AuthResponse>("/auth/register", userData);
+      const { data } = await apiClient.post<AuthResponse>(endpoints.auth.register, userData);
       return data;
     },
     onSuccess: (data) => {
@@ -48,7 +49,7 @@ export function useLogoutMutation() {
 
   return useMutation({
     mutationFn: async () => {
-      await apiClient.post("/auth/logout");
+      await apiClient.post(endpoints.auth.logout);
     },
     onSuccess: () => {
       logout();

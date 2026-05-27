@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/lib/api-client';
+import { endpoints } from '@/lib/api/endpoints';
 import { User, MovieStats, PaginatedResponse, Review, Movie } from '@/types';
 
 // Extended user type from API with stats and following info
@@ -42,7 +43,7 @@ export const useUserProfile = (userId: number, initialData?: UserProfile) => {
   return useQuery({
     queryKey: ['users', userId],
     queryFn: async () => {
-      const { data } = await apiClient.get<UserProfile>(`/users/${userId}`);
+      const { data } = await apiClient.get<UserProfile>(endpoints.users.byId(userId));
       return data;
     },
     enabled: !!userId,
@@ -54,7 +55,7 @@ export const useUserReviews = (userId: number, page: number = 1, limit: number =
   return useQuery({
     queryKey: ['users', userId, 'reviews', page],
     queryFn: async () => {
-      const { data } = await apiClient.get<PaginatedResponse<Review & { movie: Movie, user: User }>>(`/users/${userId}/reviews`, {
+      const { data } = await apiClient.get<PaginatedResponse<Review & { movie: Movie, user: User }>>(endpoints.users.reviews(userId), {
         params: { page, limit },
       });
       return data;
@@ -67,7 +68,7 @@ export const useUserWatchlist = (userId: number, page: number = 1, limit: number
   return useQuery({
     queryKey: ['users', userId, 'watchlist', page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ movies: WatchlistMovie[], total: number, page: number, limit: number }>(`/users/${userId}/watchlist`, {
+      const { data } = await apiClient.get<{ movies: WatchlistMovie[], total: number, page: number, limit: number }>(endpoints.users.watchlist(userId), {
         params: { page, limit },
       });
       return data;
@@ -80,7 +81,7 @@ export const useUserWatched = (userId: number, page: number = 1, limit: number =
   return useQuery({
     queryKey: ['users', userId, 'watched', page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ movies: WatchedMovie[], total: number, page: number, limit: number }>(`/users/${userId}/watched`, {
+      const { data } = await apiClient.get<{ movies: WatchedMovie[], total: number, page: number, limit: number }>(endpoints.users.watched(userId), {
         params: { page, limit },
       });
       return data;
@@ -93,7 +94,7 @@ export const useFollowers = (userId: number, page: number = 1, limit: number = 2
   return useQuery({
     queryKey: ['users', userId, 'followers', page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(`/users/${userId}/followers`, {
+      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(endpoints.users.followers(userId), {
         params: { page, limit },
       });
       return data;
@@ -106,7 +107,7 @@ export const useFollowing = (userId: number, page: number = 1, limit: number = 2
   return useQuery({
     queryKey: ['users', userId, 'following', page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(`/users/${userId}/following`, {
+      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(endpoints.users.following(userId), {
         params: { page, limit },
       });
       return data;
@@ -122,7 +123,7 @@ export const useFollowMutation = (userId: number) => {
 
   return useMutation({
     mutationFn: async () => {
-      const { data } = await apiClient.post(`/users/${userId}/follow`);
+      const { data } = await apiClient.post(endpoints.users.follow(userId));
       return data;
     },
     onSuccess: () => {
@@ -138,7 +139,7 @@ export const useUnfollowMutation = (userId: number) => {
 
   return useMutation({
     mutationFn: async () => {
-      const { data } = await apiClient.delete(`/users/${userId}/follow`);
+      const { data } = await apiClient.delete(endpoints.users.follow(userId));
       return data;
     },
     onSuccess: () => {

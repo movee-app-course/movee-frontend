@@ -1,5 +1,6 @@
-import { MoviePageClient } from '@/components/movie/MoviePageClient';
-import type { Movie } from '@/types';
+import { MoviePageClient } from "@/components/movie/MoviePageClient";
+import { endpoints } from "@/lib/api/endpoints";
+import type { Movie } from "@/types";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -7,12 +8,13 @@ interface MoviePageProps {
 
 export default async function MoviePage({ params }: MoviePageProps) {
   const { id } = await params;
-  
+
   let initialMovieData: Movie | null = null;
   try {
-    const res = await fetch(`http://localhost:3001/api/movies/${id}`, {
-      next: { revalidate: 30 } // Cache movie details for 30s
+    const res = await fetch(endpoints.movies.byId(Number(id)), {
+      next: { revalidate: 30 }, // Cache movie details for 30s
     });
+
     if (res.ok) {
       const rawMovie = await res.json();
       initialMovieData = {
@@ -25,12 +27,19 @@ export default async function MoviePage({ params }: MoviePageProps) {
         backdropPath: rawMovie.backdrop_path,
         releaseDate: rawMovie.release_date,
         genres: rawMovie.genres || [],
-        voteAverage: rawMovie.vote_average ? parseFloat(rawMovie.vote_average) : null,
+        voteAverage: rawMovie.vote_average
+          ? parseFloat(rawMovie.vote_average)
+          : null,
       };
     }
   } catch (err) {
     console.error(`SSR pre-fetch failed for movie ${id}:`, err);
   }
 
-  return <MoviePageClient movieId={parseInt(id, 10)} initialMovieData={initialMovieData} />;
+  return (
+    <MoviePageClient
+      movieId={parseInt(id, 10)}
+      initialMovieData={initialMovieData}
+    />
+  );
 }

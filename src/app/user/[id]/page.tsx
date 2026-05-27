@@ -1,4 +1,5 @@
 import { UserProfile } from '@/components/user/UserProfile';
+import { endpoints } from '@/lib/api/endpoints';
 import type { UserProfile as UserProfileData } from '@/hooks/use-social';
 
 interface UserPageProps {
@@ -10,7 +11,7 @@ export default async function UserPage({ params }: UserPageProps) {
   
   let initialData: UserProfileData | null = null;
   try {
-    const res = await fetch(`http://localhost:3001/api/users/${id}`, {
+    const res = await fetch(endpoints.users.byId(Number(id)), {
       next: { revalidate: 30 } // Cache profile for 30s
     });
     if (res.ok) {

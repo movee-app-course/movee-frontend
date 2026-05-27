@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import apiClient from '@/lib/api-client';
+import { endpoints } from '@/lib/api/endpoints';
 import { CursorPaginatedResponse, FeedItem, Movie } from '@/types';
 
 // API response matches { feed: FeedItem[], nextCursor: number | null }
@@ -13,7 +14,7 @@ export function useFeed() {
   return useInfiniteQuery({
     queryKey: ['feed', 'general'],
     queryFn: async ({ pageParam = null as number | null }) => {
-      const res = await apiClient.get<FeedApiResponse>('/feed', {
+      const res = await apiClient.get<FeedApiResponse>(endpoints.feed.general, {
         params: { cursor: pageParam, limit: 20 },
       });
       return res.data;
@@ -27,7 +28,7 @@ export function usePersonalFeed() {
   return useInfiniteQuery({
     queryKey: ['feed', 'personal'],
     queryFn: async ({ pageParam = null as number | null }) => {
-      const res = await apiClient.get<FeedApiResponse>('/feed/personal', {
+      const res = await apiClient.get<FeedApiResponse>(endpoints.feed.personal, {
         params: { cursor: pageParam, limit: 20 },
       });
       return res.data;
@@ -50,7 +51,7 @@ export function usePopularFeed() {
   return useQuery({
     queryKey: ['feed', 'popular'],
     queryFn: async () => {
-      const res = await apiClient.get<PopularMovieStats[]>('/feed/popular');
+      const res = await apiClient.get<PopularMovieStats[]>(endpoints.feed.popular);
       return res.data;
     },
   });
