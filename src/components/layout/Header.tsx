@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Film, User as UserIcon, LogOut } from "lucide-react";
 import { useAuthStore } from "@/stores/auth-store";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,

@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '../lib/api-client';
-import { endpoints } from '../lib/api/endpoints';
-import type { Movie, MovieStats } from '../types';
-import type { RawMovieSearchResponse } from '../types/api-responses';
+import apiClient from '@/lib/api-client';
+import { endpoints } from '@/lib/api/endpoints';
+import type { Movie, MovieStats } from '@/types';
+import type { RawMovieSearchResponse } from '@/types/api-responses';
 
 // The backend returns raw database rows with snake_case.
 // We use the camelCase Movie interface defined in architecture.
