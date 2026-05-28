@@ -44,7 +44,7 @@ export const useMovieStats = (id: number) => {
 
 export const useWatchlistMutation = (id: number) => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (action: 'add' | 'remove') => {
       if (action === 'add') {
@@ -53,7 +53,21 @@ export const useWatchlistMutation = (id: number) => {
         await apiClient.delete(endpoints.movies.watchlist(id));
       }
     },
-    onSuccess: () => {
+    onMutate: async (action) => {
+      await queryClient.cancelQueries({ queryKey: ['movies', id, 'stats'] });
+      const previous = queryClient.getQueryData<MovieStats>(['movies', id, 'stats']);
+      queryClient.setQueryData<MovieStats>(['movies', id, 'stats'], (old) => {
+        if (!old) return old;
+        return { ...old, inWatchlist: action === 'add' };
+      });
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['movies', id, 'stats'], context.previous);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['movies', id, 'stats'] });
     },
   });
@@ -61,7 +75,7 @@ export const useWatchlistMutation = (id: number) => {
 
 export const useWatchedMutation = (id: number) => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (action: 'add' | 'remove') => {
       if (action === 'add') {
@@ -70,7 +84,21 @@ export const useWatchedMutation = (id: number) => {
         await apiClient.delete(endpoints.movies.watched(id));
       }
     },
-    onSuccess: () => {
+    onMutate: async (action) => {
+      await queryClient.cancelQueries({ queryKey: ['movies', id, 'stats'] });
+      const previous = queryClient.getQueryData<MovieStats>(['movies', id, 'stats']);
+      queryClient.setQueryData<MovieStats>(['movies', id, 'stats'], (old) => {
+        if (!old) return old;
+        return { ...old, isWatched: action === 'add' };
+      });
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['movies', id, 'stats'], context.previous);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['movies', id, 'stats'] });
     },
   });

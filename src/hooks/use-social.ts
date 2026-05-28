@@ -126,10 +126,37 @@ export const useFollowMutation = (userId: number) => {
       const { data } = await apiClient.post(endpoints.users.follow(userId));
       return data;
     },
-    onSuccess: () => {
-      // Invalidate user profile to update stats
+    onMutate: async () => {
+      // Cancel any in-flight refetches so they don't overwrite our optimistic update
+      await queryClient.cancelQueries({ queryKey: ['users', userId] });
+
+      // Snapshot the previous value for potential rollback
+      const previous = queryClient.getQueryData<UserProfile>(['users', userId]);
+
+      // Optimistically update the cache immediately
+      queryClient.setQueryData<UserProfile>(['users', userId], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          isFollowing: true,
+          stats: {
+            ...old.stats,
+            followersCount: old.stats.followersCount + 1,
+          },
+        };
+      });
+
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      // Roll back to the snapshot if the mutation fails
+      if (context?.previous) {
+        queryClient.setQueryData(['users', userId], context.previous);
+      }
+    },
+    onSettled: () => {
+      // Always sync with server after mutation (success or error)
       queryClient.invalidateQueries({ queryKey: ['users', userId] });
-      // Also could invalidate the logged-in user's following list, etc.
     },
   });
 };
@@ -142,7 +169,31 @@ export const useUnfollowMutation = (userId: number) => {
       const { data } = await apiClient.delete(endpoints.users.follow(userId));
       return data;
     },
-    onSuccess: () => {
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['users', userId] });
+
+      const previous = queryClient.getQueryData<UserProfile>(['users', userId]);
+
+      queryClient.setQueryData<UserProfile>(['users', userId], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          isFollowing: false,
+          stats: {
+            ...old.stats,
+            followersCount: Math.max(0, old.stats.followersCount - 1),
+          },
+        };
+      });
+
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['users', userId], context.previous);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['users', userId] });
     },
   });
