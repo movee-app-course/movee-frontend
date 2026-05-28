@@ -6,6 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { StarIcon, Trash2Icon } from 'lucide-react';
 
 interface ReviewFormProps {
@@ -29,19 +40,17 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
     rateMutation.mutate({ score, text, hasSpoilers });
   };
 
-  const handleDelete = () => {
-    if (confirm('Are you sure you want to delete your rating?')) {
-      deleteMutation.mutate();
-      setScore(undefined);
-      setText('');
-      setHasSpoilers(false);
-    }
+  const handleConfirmDelete = () => {
+    deleteMutation.mutate();
+    setScore(undefined);
+    setText('');
+    setHasSpoilers(false);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg bg-card">
       <h3 className="font-semibold text-lg">{initialScore ? 'Update your review' : 'Rate this movie'}</h3>
-      
+
       <div className="flex items-center gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
           <button
@@ -50,8 +59,8 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
             onClick={() => setScore(val)}
             className="focus:outline-none"
           >
-            <StarIcon 
-              className={`w-6 h-6 transition-colors ${score && score >= val ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground hover:text-yellow-200'}`} 
+            <StarIcon
+              className={`w-6 h-6 transition-colors ${score && score >= val ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground hover:text-yellow-200'}`}
             />
           </button>
         ))}
@@ -73,9 +82,9 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
 
       {text.length > 0 && (
         <div className="flex items-center space-x-2">
-          <Checkbox 
-            id="spoilers" 
-            checked={hasSpoilers} 
+          <Checkbox
+            id="spoilers"
+            checked={hasSpoilers}
             onCheckedChange={(checked) => setHasSpoilers(checked as boolean)}
           />
           <Label htmlFor="spoilers" className="text-sm font-normal cursor-pointer">
@@ -88,14 +97,33 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
         <Button type="submit" disabled={!score || rateMutation.isPending}>
           {rateMutation.isPending ? 'Saving...' : 'Save'}
         </Button>
+
         {initialScore && (
-          <Button type="button" variant="destructive" onClick={handleDelete} disabled={deleteMutation.isPending}>
-            <Trash2Icon className="w-4 h-4 mr-2" />
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button" variant="destructive" disabled={deleteMutation.isPending}>
+                <Trash2Icon className="w-4 h-4 mr-2" />
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete your review?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently remove your rating and review for this movie. This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction variant="destructive" onClick={handleConfirmDelete}>
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         )}
       </div>
-      
+
       {rateMutation.isError && <p className="text-sm text-red-500">Failed to save review.</p>}
     </form>
   );
