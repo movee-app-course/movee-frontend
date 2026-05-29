@@ -69,6 +69,8 @@ export const useWatchlistMutation = (id: number) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['movies', id, 'stats'] });
+      // Invalidate the user's watchlist so the profile page reflects the change immediately
+      queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 };
@@ -100,6 +102,8 @@ export const useWatchedMutation = (id: number) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['movies', id, 'stats'] });
+      // Invalidate the user's watched list so the profile page reflects the change immediately
+      queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 };
