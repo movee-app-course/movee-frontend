@@ -21,8 +21,9 @@ export function useLoginMutation() {
     },
     onSuccess: (data) => {
       setUser(data.user, data.token);
-      // Invalidate queries that depend on auth state, like feed
-      queryClient.invalidateQueries();
+      // Invalidate only auth-dependent queries, not public data (movies, search)
+      queryClient.invalidateQueries({ queryKey: ['feed'] });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 }
@@ -38,7 +39,9 @@ export function useRegisterMutation() {
     },
     onSuccess: (data) => {
       setUser(data.user, data.token);
-      queryClient.invalidateQueries();
+      // Invalidate only auth-dependent queries, not public data (movies, search)
+      queryClient.invalidateQueries({ queryKey: ['feed'] });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
     },
   });
 }
