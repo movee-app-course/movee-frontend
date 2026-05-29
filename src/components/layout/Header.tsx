@@ -62,7 +62,7 @@ export function Header() {
 
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger className="rounded-full p-0 border-0 bg-transparent outline-none focus:outline-none focus:ring-0">
                   <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-transparent hover:ring-primary/40 transition-all">
                     <AvatarImage src={user.avatarUrl || ""} alt={user.displayName} />
                     <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">

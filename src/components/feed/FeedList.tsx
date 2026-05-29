@@ -1,4 +1,4 @@
-import { useInView } from 'react-intersection-observer';
+import { useInView } from '@/hooks/use-in-view';
 import { useEffect } from 'react';
 import { FeedItem } from '@/types';
 import { ReviewCard } from '@/components/review/ReviewCard';

@@ -1,9 +1,7 @@
 import { Review } from '@/types';
-import { formatDistanceToNow } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { tmdbImage, timeAgo } from '@/lib/utils';
 import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from 'lucide-react';
 import { SpoilerToggle } from './SpoilerToggle';
-import { tmdbImage } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -67,7 +65,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
             <span className="text-xs font-normal opacity-60">/10</span>
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true, locale: ru })}
+            {timeAgo(review.createdAt)}
           </p>
         </div>
       </div>

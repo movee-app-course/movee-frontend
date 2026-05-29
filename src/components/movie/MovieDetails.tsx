@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Movie } from '@/types';
-import { format } from 'date-fns';
 import { StarIcon } from 'lucide-react';
 import { tmdbImage } from '@/lib/utils';
 
@@ -60,7 +59,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {movie.release_date && (
               <span className="text-sm font-semibold text-muted-foreground">
-                {format(new Date(movie.release_date), 'yyyy')}
+                {new Date(movie.release_date).getFullYear()}
               </span>
             )}
             {movie.vote_average && Number(movie.vote_average) > 0 && (
