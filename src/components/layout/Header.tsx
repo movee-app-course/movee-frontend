@@ -36,7 +36,7 @@ export function Header() {
               className={`transition-colors hover:text-foreground/80 ${pathname === "/" ? "text-foreground" : "text-foreground/60"
                 }`}
             >
-              Feed
+              Лента
             </Link>
             <Link
               href="/search"
@@ -45,7 +45,7 @@ export function Header() {
                 : "text-foreground/60"
                 }`}
             >
-              Search
+              Поиск
             </Link>
           </nav>
         </div>
@@ -85,24 +85,24 @@ export function Header() {
                     onClick={() => router.push('/profile')}
                   >
                     <UserIcon className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <span>Профиль</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-red-600 focus:text-red-600 cursor-pointer"
                     onClick={() => logout()}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <span>Выйти</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
                 <Link href="/login" className={`hidden sm:flex ${buttonVariants({ variant: 'ghost' })}`}>
-                  Log in
+                  Войти
                 </Link>
                 <Link href="/register" className={buttonVariants()}>
-                  Sign up
+                  Зарегистрироваться
                 </Link>
               </div>
             )}

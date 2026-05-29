@@ -53,7 +53,7 @@ export function FollowButton({ userId, isFollowing: isFollowingProp, className }
       disabled={isLoading}
       className={className}
     >
-      {isFollowing ? 'Following' : 'Follow'}
+      {isFollowing ? 'Подписан' : 'Подписаться'}
     </Button>
   );
 }

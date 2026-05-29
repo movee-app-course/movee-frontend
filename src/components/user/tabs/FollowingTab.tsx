@@ -27,7 +27,7 @@ export function FollowingTab({ userId }: FollowingTabProps) {
   const { data, isLoading } = useFollowing(userId);
 
   if (isLoading) return <FollowingLoading />;
-  if (!data?.users?.length) return <EmptyState message="Not following anyone yet." />;
+  if (!data?.users?.length) return <EmptyState message="Нет подписок." />;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

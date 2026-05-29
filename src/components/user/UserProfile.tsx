@@ -24,11 +24,11 @@ interface UserProfileProps {
 }
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: 'reviews', label: 'Reviews', icon: <MessageSquareIcon className="w-4 h-4" /> },
-  { key: 'watchlist', label: 'Watchlist', icon: <BookmarkIcon className="w-4 h-4" /> },
-  { key: 'watched', label: 'Watched', icon: <EyeIcon className="w-4 h-4" /> },
-  { key: 'followers', label: 'Followers', icon: <UsersIcon className="w-4 h-4" /> },
-  { key: 'following', label: 'Following', icon: <UserCheckIcon className="w-4 h-4" /> },
+  { key: 'reviews', label: 'Отзывы', icon: <MessageSquareIcon className="w-4 h-4" /> },
+  { key: 'watchlist', label: 'Список желаний', icon: <BookmarkIcon className="w-4 h-4" /> },
+  { key: 'watched', label: 'Просмотрено', icon: <EyeIcon className="w-4 h-4" /> },
+  { key: 'followers', label: 'Подписчики', icon: <UsersIcon className="w-4 h-4" /> },
+  { key: 'following', label: 'Подписки', icon: <UserCheckIcon className="w-4 h-4" /> },
 ];
 
 export function UserProfile({ userId, isOwnProfile = false, initialData }: UserProfileProps) {
@@ -46,8 +46,8 @@ export function UserProfile({ userId, isOwnProfile = false, initialData }: UserP
         <div className="rounded-full bg-muted p-5 mb-4">
           <FilmIcon className="w-10 h-10 text-muted-foreground/50" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">User not found</h1>
-        <p className="text-muted-foreground">This profile doesn&apos;t exist.</p>
+        <h1 className="text-2xl font-bold mb-2">Пользователь не найден</h1>
+        <p className="text-muted-foreground">Такого профиля не существует.</p>
       </div>
     );
   }

@@ -28,19 +28,19 @@ export function UserProfileHeader({ user, isOwnProfile, onStatClick }: UserProfi
         <div className="flex flex-wrap justify-center md:justify-start gap-6 pt-3">
           <button className="text-center group" onClick={() => onStatClick('reviews')}>
             <span className="font-bold text-lg group-hover:text-primary transition-colors">{user.stats.reviewsCount}</span>
-            <p className="text-xs text-muted-foreground">Reviews</p>
+            <p className="text-xs text-muted-foreground">Отзывы</p>
           </button>
           <button className="text-center group" onClick={() => onStatClick('watched')}>
             <span className="font-bold text-lg group-hover:text-primary transition-colors">{user.stats.watchedCount}</span>
-            <p className="text-xs text-muted-foreground">Watched</p>
+            <p className="text-xs text-muted-foreground">Просмотрено</p>
           </button>
           <button className="text-center group" onClick={() => onStatClick('followers')}>
             <span className="font-bold text-lg group-hover:text-primary transition-colors">{user.stats.followersCount}</span>
-            <p className="text-xs text-muted-foreground">Followers</p>
+            <p className="text-xs text-muted-foreground">Подписчики</p>
           </button>
           <button className="text-center group" onClick={() => onStatClick('following')}>
             <span className="font-bold text-lg group-hover:text-primary transition-colors">{user.stats.followingCount}</span>
-            <p className="text-xs text-muted-foreground">Following</p>
+            <p className="text-xs text-muted-foreground">Подписки</p>
           </button>
         </div>
       </div>

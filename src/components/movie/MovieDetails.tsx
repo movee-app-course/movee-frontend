@@ -43,7 +43,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
               />
             ) : (
               <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-sm">
-                No Poster
+                Нет постера
               </div>
             )}
           </div>
@@ -85,7 +85,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
 
           {movie.overview && (
             <div className="space-y-2 max-w-2xl">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Overview</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">О фильме</h2>
               <p className="text-sm md:text-base text-foreground/80 leading-relaxed">
                 {movie.overview}
               </p>

@@ -35,26 +35,26 @@ export function MovieStatsCard({ stats, isLoading }: MovieStatsCardProps) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-base">Statistics</CardTitle>
+        <CardTitle className="text-base">Статистика</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Average Rating</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Средняя оценка</p>
           <p className="text-3xl font-bold">
             {stats.averageScore ? stats.averageScore : '—'}
             {stats.averageScore && <span className="text-base font-normal text-muted-foreground">/10</span>}
           </p>
-          <p className="text-xs text-muted-foreground">{stats.totalRatings} ratings</p>
+          <p className="text-xs text-muted-foreground">{stats.totalRatings} оценок</p>
         </div>
 
         {_hasHydrated && user && (stats.friendsWatched > 0 || stats.friendsAverageScore) && (
           <div className="pt-3 border-t">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Friends&apos; Rating</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Оценка друзей</p>
             <p className="text-3xl font-bold">
               {stats.friendsAverageScore ? stats.friendsAverageScore : '—'}
               {stats.friendsAverageScore && <span className="text-base font-normal text-muted-foreground">/10</span>}
             </p>
-            <p className="text-xs text-muted-foreground">{stats.friendsWatched} friends watched</p>
+            <p className="text-xs text-muted-foreground">{stats.friendsWatched} друзей посмотрело</p>
           </div>
         )}
       </CardContent>

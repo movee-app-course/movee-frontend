@@ -25,7 +25,7 @@ export default function HomePage() {
           Movee
         </h1>
         <p className="text-muted-foreground mt-1">
-          What are your people watching?
+          Что смотрят ваши друзья?
         </p>
       </div>
 
@@ -33,11 +33,11 @@ export default function HomePage() {
         <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="general" className="flex items-center gap-2">
             <Rss className="w-4 h-4" />
-            Feed
+            Лента
           </TabsTrigger>
           <TabsTrigger value="personal" className="flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
-            For You
+            Для вас
           </TabsTrigger>
         </TabsList>
 
@@ -83,7 +83,7 @@ export default function HomePage() {
               />
               <div>
                 <h2 className="text-lg font-semibold px-1 mb-4">
-                  Reviews from people you follow
+                  Отзывы людей, на которых вы подписаны
                 </h2>
                 <FeedList
                   data={personalFeed.data}
@@ -99,20 +99,20 @@ export default function HomePage() {
               <div className="rounded-full bg-primary/10 p-5 mb-5">
                 <Sparkles className="w-10 h-10 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Join Movee</h2>
+              <h2 className="text-2xl font-bold mb-2">Присоединяйтесь к Movee</h2>
               <p className="text-muted-foreground mb-8 max-w-sm">
-                Sign in to see reviews from people you follow and discover what
-                your circle is watching this week.
+                Войдите, чтобы видеть отзывы людей, на которых подписаны, и
+                узнавать, что смотрят ваши друзья на этой неделе.
               </p>
               <div className="flex gap-3">
                 <Link href="/register" className={buttonVariants({ size: "lg" })}>
-                  Get started
+                  Начать
                 </Link>
                 <Link
                   href="/login"
                   className={buttonVariants({ variant: "outline", size: "lg" })}
                 >
-                  Log in
+                  Войти
                 </Link>
               </div>
             </div>

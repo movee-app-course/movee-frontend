@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Movee — Social Movie Tracking",
+  title: "Movee — Социальный кинотрекер",
   description:
-    "Discover what to watch next based on recommendations from real people you follow.",
+    "Узнайте, что посмотреть дальше, основываясь на рекомендациях людей, на которых вы подписаны.",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >

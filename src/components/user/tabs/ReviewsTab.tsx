@@ -11,7 +11,7 @@ export function ReviewsTab({ userId }: ReviewsTabProps) {
   const { data, isLoading } = useUserReviews(userId);
 
   if (isLoading) return <TabLoading />;
-  if (!data?.data?.length) return <EmptyState message="No reviews yet." />;
+  if (!data?.data?.length) return <EmptyState message="Отзывов ещё нет." />;
 
   return (
     <div className="space-y-4">

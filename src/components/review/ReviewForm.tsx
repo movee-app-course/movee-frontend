@@ -49,7 +49,7 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg bg-card">
-      <h3 className="font-semibold text-lg">{initialScore ? 'Update your review' : 'Rate this movie'}</h3>
+      <h3 className="font-semibold text-lg">{initialScore ? 'Обновить отзыв' : 'Оценить фильм'}</h3>
 
       <div className="flex items-center gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
@@ -68,16 +68,16 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="review">Review (optional)</Label>
+        <Label htmlFor="review">Отзыв (необязательно)</Label>
         <Textarea
           id="review"
-          placeholder="What did you think of the movie?"
+          placeholder="Что вы думаете о фильме?"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={3}
           disabled={!score}
         />
-        {!score && <p className="text-xs text-muted-foreground">Select a score first to write a review.</p>}
+        {!score && <p className="text-xs text-muted-foreground">Сначала выберите оценку, чтобы написать отзыв.</p>}
       </div>
 
       {text.length > 0 && (
@@ -88,14 +88,14 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
             onCheckedChange={(checked) => setHasSpoilers(checked as boolean)}
           />
           <Label htmlFor="spoilers" className="text-sm font-normal cursor-pointer">
-            This review contains spoilers
+            Этот отзыв содержит спойлеры
           </Label>
         </div>
       )}
 
       <div className="flex gap-2">
         <Button type="submit" disabled={!score || rateMutation.isPending}>
-          {rateMutation.isPending ? 'Saving...' : 'Save'}
+          {rateMutation.isPending ? 'Сохранение...' : 'Сохранить'}
         </Button>
 
         {initialScore && (
@@ -103,20 +103,20 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
             <AlertDialogTrigger asChild>
               <Button type="button" variant="destructive" disabled={deleteMutation.isPending}>
                 <Trash2Icon className="w-4 h-4 mr-2" />
-                Delete
+                Удалить
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete your review?</AlertDialogTitle>
+                <AlertDialogTitle>Удалить отзыв?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This will permanently remove your rating and review for this movie. This action cannot be undone.
+                  Это навсегда удалит вашу оценку и отзыв на этот фильм. Действие нельзя отменить.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Отмена</AlertDialogCancel>
                 <AlertDialogAction variant="destructive" onClick={handleConfirmDelete}>
-                  Delete
+                  Удалить
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -124,7 +124,7 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
         )}
       </div>
 
-      {rateMutation.isError && <p className="text-sm text-red-500">Failed to save review.</p>}
+      {rateMutation.isError && <p className="text-sm text-red-500">Не удалось сохранить отзыв.</p>}
     </form>
   );
 }

@@ -19,7 +19,7 @@ export function BottomNav() {
           }`}
         >
           <Home className="w-5 h-5 mb-1" />
-          <span className="text-xs">Feed</span>
+          <span className="text-xs">Лента</span>
         </Link>
         <Link
           href="/search"
@@ -28,7 +28,7 @@ export function BottomNav() {
           }`}
         >
           <Search className="w-5 h-5 mb-1" />
-          <span className="text-xs">Search</span>
+          <span className="text-xs">Поиск</span>
         </Link>
         <Link
           href={user ? "/profile" : "/login"}
@@ -37,7 +37,7 @@ export function BottomNav() {
           }`}
         >
           <UserIcon className="w-5 h-5 mb-1" />
-          <span className="text-xs">{user ? "Profile" : "Log in"}</span>
+          <span className="text-xs">{user ? "Профиль" : "Войти"}</span>
         </Link>
       </div>
     </div>

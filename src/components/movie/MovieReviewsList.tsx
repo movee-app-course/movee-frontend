@@ -13,7 +13,7 @@ export function MovieReviewsList({ reviews, isLoading }: MovieReviewsListProps) 
   return (
     <div>
       <h3 className="text-xl font-bold mb-4">
-        Reviews
+        Отзывы
         {reviews && reviews.length > 0 && (
           <span className="text-base font-normal text-muted-foreground ml-2">
             ({reviews.length})
@@ -45,7 +45,7 @@ export function MovieReviewsList({ reviews, isLoading }: MovieReviewsListProps) 
       ) : (
         <div className="text-center py-10 px-4 border rounded-xl bg-card/50">
           <p className="text-muted-foreground text-sm">
-            No reviews yet. Be the first to review!
+            Отзывов пока нет. Будьте первым!
           </p>
         </div>
       )}

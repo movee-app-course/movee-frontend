@@ -25,7 +25,7 @@ export function MovieActionsCard({ stats, watchlistMutation, watchedMutation }: 
           {stats?.inWatchlist
             ? <BookmarkCheckIcon className="w-4 h-4 text-primary" />
             : <BookmarkIcon className="w-4 h-4" />}
-          {stats?.inWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
+          {stats?.inWatchlist ? 'В списке желаний' : 'Добавить в список желаний'}
         </Button>
 
         <Button
@@ -37,7 +37,7 @@ export function MovieActionsCard({ stats, watchlistMutation, watchedMutation }: 
           {stats?.isWatched
             ? <CheckCircleIcon className="w-4 h-4 text-green-500" />
             : <EyeIcon className="w-4 h-4" />}
-          {stats?.isWatched ? 'Watched' : 'Mark as Watched'}
+          {stats?.isWatched ? 'Просмотрено' : 'Отметить как просмотренное'}
         </Button>
       </CardContent>
     </Card>

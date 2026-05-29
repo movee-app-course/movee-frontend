@@ -27,7 +27,7 @@ export function FollowersTab({ userId }: FollowersTabProps) {
   const { data, isLoading } = useFollowers(userId);
 
   if (isLoading) return <FollowersLoading />;
-  if (!data?.users?.length) return <EmptyState message="No followers yet." />;
+  if (!data?.users?.length) return <EmptyState message="Подписчиков пока нет." />;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

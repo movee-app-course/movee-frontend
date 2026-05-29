@@ -22,8 +22,8 @@ import {
 } from "@/components/ui/card";
 
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
+  email: z.string().email("Введите корректный адрес электронной почты"),
+  password: z.string().min(1, "Пароль обязателен"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -49,7 +49,7 @@ export default function LoginPage() {
       router.push("/");
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
-      setError(e.response?.data?.message || "Failed to login. Please try again.");
+      setError(e.response?.data?.message || "Не удалось войти. Попробуйте ещё раз.");
     }
   };
 
@@ -65,14 +65,14 @@ export default function LoginPage() {
 
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-          <CardDescription>Enter your credentials to continue</CardDescription>
+          <CardTitle className="text-2xl font-bold">Добро пожаловать</CardTitle>
+          <CardDescription>Введите данные для входа</CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Электронная почта</Label>
               <Input
                 id="email"
                 type="email"
@@ -87,7 +87,7 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Пароль</Label>
               <Input
                 id="password"
                 type="password"
@@ -114,10 +114,10 @@ export default function LoginPage() {
               {loginMutation.isPending ? (
                 <>
                   <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
+                  Вход...
                 </>
               ) : (
-                "Log in"
+                "Войти"
               )}
             </Button>
           </form>
@@ -125,9 +125,9 @@ export default function LoginPage() {
 
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
+            У вас нет аккаунта?{" "}
             <Link href="/register" className="text-primary font-medium hover:underline">
-              Sign up
+              Зарегистрироваться
             </Link>
           </p>
         </CardFooter>

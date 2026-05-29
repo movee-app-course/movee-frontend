@@ -11,7 +11,7 @@ export function WatchlistTab({ userId }: WatchlistTabProps) {
   const { data, isLoading } = useUserWatchlist(userId);
 
   if (isLoading) return <MovieGridLoading />;
-  if (!data?.movies?.length) return <EmptyState message="Watchlist is empty." />;
+  if (!data?.movies?.length) return <EmptyState message="Список желаний пуст." />;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

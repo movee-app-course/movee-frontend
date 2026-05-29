@@ -22,11 +22,11 @@ export default function GlobalError({ error, reset }: ErrorProps) {
   return (
     <ErrorPage
       icon={WarningIcon}
-      title="Something went wrong"
+      title="Что-то пошло не так"
       description={
         error.digest
-          ? `An unexpected error occurred (ID: ${error.digest}). Please try again or refresh the page.`
-          : "An unexpected error occurred. Please try again or refresh the page."
+          ? `Произошла неожиданная ошибка (ИД: ${error.digest}). Попробуйте ещё раз или обновите страницу.`
+          : "Произошла неожиданная ошибка. Попробуйте ещё раз или обновите страницу."
       }
       onReset={reset}
     />

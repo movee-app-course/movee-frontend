@@ -15,8 +15,8 @@ interface ErrorPageProps {
 export function ErrorPage({
   title,
   description,
-  resetLabel = "Try again",
-  backLabel = "Go home",
+  resetLabel = "Попробовать ещё раз",
+  backLabel = "На главную",
   backHref = "/",
   icon,
   onReset,

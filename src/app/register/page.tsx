@@ -22,17 +22,17 @@ import {
 } from "@/components/ui/card";
 
 const registerSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("Введите корректный адрес электронной почты"),
   username: z
     .string()
-    .min(3, "Username must be at least 3 characters")
-    .max(50, "Username must be at most 50 characters")
-    .regex(/^[a-z0-9_]+$/, "Only lowercase letters, numbers, and underscores"),
+    .min(3, "Имя пользователя должно содержать хотя бы 3 символа")
+    .max(50, "Имя пользователя должно содержать не более 50 символов")
+    .regex(/^[a-z0-9_]+$/, "Только малые латинские буквы, цифры и подчёркивания"),
   displayName: z
     .string()
-    .min(1, "Display name is required")
-    .max(100, "Display name must be at most 100 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+    .min(1, "Отображаемое имя обязательно")
+    .max(100, "Отображаемое имя должно содержать не более 100 символов"),
+  password: z.string().min(6, "Пароль должен содержать хотя бы 6 символов"),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -58,7 +58,7 @@ export default function RegisterPage() {
       router.push("/");
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
-      setError(e.response?.data?.message || "Failed to register. Please try again.");
+      setError(e.response?.data?.message || "Не удалось зарегистрироваться. Попробуйте ещё раз.");
     }
   };
 
@@ -74,14 +74,14 @@ export default function RegisterPage() {
 
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold">Create account</CardTitle>
-          <CardDescription>Join Movee and start tracking movies</CardDescription>
+          <CardTitle className="text-2xl font-bold">Создать аккаунт</CardTitle>
+          <CardDescription>Присоединяйтесь к Movee и начните вести список кино</CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Электронная почта</Label>
               <Input
                 id="email"
                 type="email"
@@ -96,11 +96,11 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="displayName">Display Name</Label>
+              <Label htmlFor="displayName">Отображаемое имя</Label>
               <Input
                 id="displayName"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Иван Иванов"
                 autoComplete="name"
                 {...register("displayName")}
                 className={errors.displayName ? "border-destructive" : ""}
@@ -111,7 +111,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">Имя пользователя</Label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">@</span>
                 <Input
@@ -129,7 +129,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Пароль</Label>
               <Input
                 id="password"
                 type="password"
@@ -156,10 +156,10 @@ export default function RegisterPage() {
               {registerMutation.isPending ? (
                 <>
                   <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
+                  Создание аккаунта...
                 </>
               ) : (
-                "Create account"
+                "Создать аккаунт"
               )}
             </Button>
           </form>
@@ -167,9 +167,9 @@ export default function RegisterPage() {
 
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
+            У вас уже есть аккаунт?{" "}
             <Link href="/login" className="text-primary font-medium hover:underline">
-              Log in
+              Войти
             </Link>
           </p>
         </CardFooter>

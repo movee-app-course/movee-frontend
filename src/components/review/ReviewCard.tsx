@@ -1,5 +1,6 @@
 import { Review } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from 'lucide-react';
 import { SpoilerToggle } from './SpoilerToggle';
 import { tmdbImage } from '@/lib/utils';
@@ -66,7 +67,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
             <span className="text-xs font-normal opacity-60">/10</span>
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
+            {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true, locale: ru })}
           </p>
         </div>
       </div>
@@ -78,7 +79,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
             <div>
               <div className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 mb-1.5">
                 <AlertTriangleIcon className="w-3.5 h-3.5" />
-                <span>Contains spoilers</span>
+                <span>Содержит спойлеры</span>
               </div>
               <SpoilerToggle text={review.text} />
             </div>

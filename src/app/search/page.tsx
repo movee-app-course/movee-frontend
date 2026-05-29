@@ -16,15 +16,15 @@ export default function SearchPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-2">Search Movies</h1>
-      <p className="text-muted-foreground mb-6">Find any movie and see what your people think about it.</p>
+      <h1 className="text-3xl font-bold mb-2">Поиск фильмов</h1>
+      <p className="text-muted-foreground mb-6">Найдите любой фильм и узнайте, что думают о нём ваши друзья.</p>
 
       <div className="relative mb-8 max-w-xl">
         <SearchIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
         <Input
           id="movie-search-input"
           type="text"
-          placeholder="Type a movie title..."
+          placeholder="Введите название фильма..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="pl-10 h-12 text-base"
@@ -51,9 +51,9 @@ export default function SearchPage() {
           <div className="rounded-full bg-destructive/10 p-4 mb-4">
             <FilmIcon className="w-8 h-8 text-destructive" />
           </div>
-          <h3 className="text-lg font-semibold mb-1">Something went wrong</h3>
+          <h3 className="text-lg font-semibold mb-1">Произошла ошибка</h3>
           <p className="text-muted-foreground text-sm">
-            Failed to fetch movies. Please try again.
+            Не удалось загрузить фильмы. Попробуйте ещё раз.
           </p>
         </div>
       )}
@@ -64,9 +64,9 @@ export default function SearchPage() {
           <div className="rounded-full bg-muted p-4 mb-4">
             <SearchIcon className="w-8 h-8 text-muted-foreground/50" />
           </div>
-          <h3 className="text-lg font-semibold mb-1">No results found</h3>
+          <h3 className="text-lg font-semibold mb-1">Результаты не найдены</h3>
           <p className="text-muted-foreground text-sm">
-            No movies found for &quot;{debouncedQuery}&quot;. Try a different title.
+            Фильмы по запросу &quot;{debouncedQuery}&quot; не найдены. Попробуйте другое название.
           </p>
         </div>
       )}
@@ -75,7 +75,7 @@ export default function SearchPage() {
       {!debouncedQuery && !isLoading && (
         <div className="flex flex-col items-center justify-center py-16 text-center text-muted-foreground">
           <FilmIcon className="w-12 h-12 opacity-20 mb-3" />
-          <p className="text-sm">Start typing to discover movies</p>
+          <p className="text-sm">Начните вводить, чтобы найти фильмы</p>
         </div>
       )}
 

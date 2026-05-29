@@ -59,11 +59,11 @@ export function MoviePageClient({ movieId, initialMovieData }: MoviePageClientPr
         <div className="rounded-full bg-muted p-5 mb-4">
           <FilmIcon className="w-10 h-10 text-muted-foreground/50" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">Movie not found</h1>
+        <h1 className="text-2xl font-bold mb-2">Фильм не найден</h1>
         <p className="text-muted-foreground mb-6">
-          This movie doesn&apos;t exist or couldn&apos;t be loaded.
+          Этого фильма не существует или его не удалось загрузить.
         </p>
-        <Link href="/search" className={buttonVariants()}>Search movies</Link>
+        <Link href="/search" className={buttonVariants()}>Поиск фильмов</Link>
       </div>
     );
   }
@@ -89,11 +89,11 @@ export function MoviePageClient({ movieId, initialMovieData }: MoviePageClientPr
                 <CardContent className="p-6 text-center">
                   <LogInIcon className="w-8 h-8 text-muted-foreground/50 mx-auto mb-3" />
                   <p className="text-muted-foreground text-sm mb-4">
-                    Log in to rate and review this movie.
+                    Войдите, чтобы оценить и оставить отзыв на фильм.
                   </p>
                   <div className="flex gap-2 justify-center">
-                    <Link href="/login" className={buttonVariants({ size: 'sm' })}>Log in</Link>
-                    <Link href="/register" className={buttonVariants({ variant: 'outline', size: 'sm' })}>Sign up</Link>
+                    <Link href="/login" className={buttonVariants({ size: 'sm' })}>Войти</Link>
+                    <Link href="/register" className={buttonVariants({ variant: 'outline', size: 'sm' })}>Зарегистрироваться</Link>
                   </div>
                 </CardContent>
               </Card>

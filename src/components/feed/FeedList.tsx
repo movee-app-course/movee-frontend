@@ -55,9 +55,9 @@ export function FeedList({ data, isLoading, isFetchingNextPage, hasNextPage, fet
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium mb-1">It's quiet here...</h3>
+        <h3 className="text-lg font-medium mb-1">Здесь тихо...</h3>
         <p className="text-sm max-w-sm mx-auto">
-          We couldn't find any recent activities. Try following some users or writing your own reviews to fill up your feed!
+          Новых активностей пока нет. Подпишитесь на пользователей или напишите собственные отзывы, чтобы наполнить ленту!
         </p>
       </div>
     );
@@ -77,7 +77,7 @@ export function FeedList({ data, isLoading, isFetchingNextPage, hasNextPage, fet
             <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse delay-150"></div>
           </div>
         )}
-        {!hasNextPage && items.length > 0 && <p className="opacity-60">— You've reached the end —</p>}
+        {!hasNextPage && items.length > 0 && <p className="opacity-60">— Вы дошли до конца —</p>}
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export function SpoilerToggle({ text }: SpoilerToggleProps) {
           className="px-0 mt-1 h-auto text-muted-foreground hover:text-foreground"
         >
           <EyeOffIcon className="w-3 h-3 mr-1" />
-          Hide spoiler
+          Скрыть спойлер
         </Button>
       </div>
     );
@@ -30,10 +30,10 @@ export function SpoilerToggle({ text }: SpoilerToggleProps) {
 
   return (
     <div className="bg-muted/50 rounded p-4 text-center border border-dashed border-muted-foreground/30">
-      <p className="text-sm text-muted-foreground mb-2">This review contains spoilers.</p>
+      <p className="text-sm text-muted-foreground mb-2">Этот отзыв содержит спойлеры.</p>
       <Button variant="secondary" size="sm" onClick={() => setIsVisible(true)}>
         <EyeIcon className="w-4 h-4 mr-2" />
-        Show Spoilers
+        Показать спойлеры
       </Button>
     </div>
   );
