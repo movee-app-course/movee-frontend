@@ -1,10 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Film, User as UserIcon, LogOut } from "lucide-react";
-import { useAuthStore } from "@/stores/auth-store";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,7 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuthStore } from "@/stores/auth-store";
+import { Film, LogOut, User as UserIcon } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export function Header() {
   const { user, logout } = useAuthStore();
@@ -26,24 +26,24 @@ export function Header() {
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Film className="h-6 w-6" />
-            <span className="hidden font-bold sm:inline-block">
-              Movee
-            </span>
+            <span className="hidden font-bold sm:inline-block">Movee</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               href="/"
-              className={`transition-colors hover:text-foreground/80 ${pathname === "/" ? "text-foreground" : "text-foreground/60"
-                }`}
+              className={`transition-colors hover:text-foreground/80 ${
+                pathname === "/" ? "text-foreground" : "text-foreground/60"
+              }`}
             >
               Лента
             </Link>
             <Link
               href="/search"
-              className={`transition-colors hover:text-foreground/80 ${pathname?.startsWith("/search")
-                ? "text-foreground"
-                : "text-foreground/60"
-                }`}
+              className={`transition-colors hover:text-foreground/80 ${
+                pathname?.startsWith("/search")
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              }`}
             >
               Поиск
             </Link>
@@ -56,15 +56,18 @@ export function Header() {
           <span className="font-bold">Movee</span>
         </Link>
 
-        <div className="flex flex-1 items-center justify-end space-x-2">
-          <nav className="flex items-center space-x-2">
+        <div className="flex flex-1 items-center justify-end gap-2">
+          <nav className="flex items-center gap-2">
             <ThemeToggle />
 
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger className="rounded-full p-0 border-0 bg-transparent outline-none focus:outline-none focus:ring-0">
                   <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-transparent hover:ring-primary/40 transition-all">
-                    <AvatarImage src={user.avatarUrl || ""} alt={user.displayName} />
+                    <AvatarImage
+                      src={user.avatarUrl || ""}
+                      alt={user.displayName}
+                    />
                     <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
                       {user.displayName.charAt(0).toUpperCase()}
                     </AvatarFallback>
@@ -82,7 +85,7 @@ export function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="cursor-pointer"
-                    onClick={() => router.push('/profile')}
+                    onClick={() => router.push("/profile")}
                   >
                     <UserIcon className="mr-2 h-4 w-4" />
                     <span>Профиль</span>
@@ -98,7 +101,10 @@ export function Header() {
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
-                <Link href="/login" className={`hidden sm:flex ${buttonVariants({ variant: 'ghost' })}`}>
+                <Link
+                  href="/login"
+                  className={`hidden sm:flex ${buttonVariants({ variant: "ghost" })}`}
+                >
                   Войти
                 </Link>
                 <Link href="/register" className={buttonVariants()}>
