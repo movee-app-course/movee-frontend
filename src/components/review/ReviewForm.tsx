@@ -100,11 +100,11 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
 
         {initialScore && (
           <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button type="button" variant="destructive" disabled={deleteMutation.isPending}>
-                <Trash2Icon className="w-4 h-4 mr-2" />
-                Удалить
-              </Button>
+            <AlertDialogTrigger
+              render={<Button type="button" variant="destructive" disabled={deleteMutation.isPending} />}
+            >
+              <Trash2Icon className="w-4 h-4 mr-2" />
+              Удалить
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
