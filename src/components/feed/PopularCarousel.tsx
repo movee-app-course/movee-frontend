@@ -36,7 +36,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
   return (
     <div className="space-y-2 mb-6">
       <h2 className="text-lg font-semibold px-1">Популярное у подписок</h2>
-      <ScrollArea className="w-full whitespace-nowrap pb-4">
+      <ScrollArea className="w-full whitespace-nowrap">
         <div className="flex w-max space-x-4 px-1">
           {movies.map((movie) => {
             const posterUrl = tmdbImage(movie.poster_path, 'w200') || '/placeholder-poster.png';
@@ -70,7 +70,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
             );
           })}
         </div>
-        <ScrollBar orientation="horizontal" />
+        <ScrollBar orientation="horizontal" className="hidden" />
       </ScrollArea>
     </div>
   );
