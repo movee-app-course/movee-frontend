@@ -1,4 +1,6 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL;
+const BASE = typeof window === 'undefined'
+  ? (process.env.API_URL || 'http://backend_dev:3001/api')
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api');
 // if (!BASE) throw new Error('NEXT_PUBLIC_API_URL is not defined');
 
 /**
