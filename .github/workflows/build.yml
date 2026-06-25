@@ -75,6 +75,7 @@ jobs:
           echo "DEPLOY_PATH=$(doppler secrets get DEPLOY_PATH --plain)" >> $GITHUB_OUTPUT
           echo "GHCR_PAT=$(doppler secrets get GHCR_PAT --plain)" >> $GITHUB_OUTPUT
           echo "GITHUB_ORG=$(doppler secrets get GITHUB_ORG --plain)" >> $GITHUB_OUTPUT
+          echo "BOT_WEBHOOK_URL=$(doppler secrets get BOT_WEBHOOK_URL --plain)" >> $GITHUB_OUTPUT
 
           echo "SERVER_SSH_KEY<<SSHEOF" >> $GITHUB_OUTPUT
           doppler secrets get SERVER_SSH_KEY --plain >> $GITHUB_OUTPUT
@@ -102,3 +103,17 @@ jobs:
           GITHUB_ORG: ${{ steps.secrets.outputs.GITHUB_ORG }}
           DEPLOY_PATH: ${{ steps.secrets.outputs.DEPLOY_PATH }}
           SERVICE_NAME: ${{ needs.build-and-push.outputs.service_name }}
+          BOT_WEBHOOK_URL: ${{ steps.secrets.outputs.BOT_WEBHOOK_URL }}
+
+      - name: Send Notification
+        if: always()
+        run: |
+          curl -X POST ${{ steps.secrets.outputs.BOT_WEBHOOK_URL }} \
+          -H "Content-Type: application/json" \
+          -d '{
+            "app": "Movee Frontend",
+            "environment": "${{ github.ref == '\''refs/heads/main'\'' && '\''Production'\'' || '\''Staging'\'' }}",
+            "status": "${{ job.status }}",
+            "actor": "${{ github.actor }}",
+            "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
