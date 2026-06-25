@@ -112,7 +112,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{
             "app": "Movee Frontend",
-            "environment": "${{ github.ref == '\''refs/heads/main'\'' && '\''Production'\'' || '\''Staging'\'' }}",
+             "environment": "${{ github.ref == 'refs/heads/main' && 'Production' || 'Staging' }}",
             "status": "${{ job.status }}",
             "actor": "${{ github.actor }}",
             "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
