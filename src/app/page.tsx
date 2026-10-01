@@ -24,9 +24,7 @@ export default function HomePage() {
         <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-violet-500 bg-clip-text text-transparent">
           Movee
         </h1>
-        <p className="text-muted-foreground mt-1">
-          Что смотрят ваши друзья?
-        </p>
+        <p className="text-muted-foreground mt-1">Что смотрят ваши друзья?</p>
       </div>
 
       <Tabs defaultValue="general" className="w-full">
@@ -58,12 +56,18 @@ export default function HomePage() {
                 <Skeleton className="h-6 w-48" />
                 <div className="flex gap-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-[180px] w-[120px] rounded-xl" />
+                    <Skeleton
+                      key={i}
+                      className="h-[180px] w-[120px] rounded-xl"
+                    />
                   ))}
                 </div>
               </div>
               {[1, 2].map((i) => (
-                <div key={i} className="flex flex-col space-y-3 p-4 border rounded-xl">
+                <div
+                  key={i}
+                  className="flex flex-col space-y-3 p-4 border rounded-xl"
+                >
                   <div className="flex items-center space-x-4">
                     <Skeleton className="h-10 w-10 rounded-full" />
                     <div className="space-y-2">
@@ -83,7 +87,7 @@ export default function HomePage() {
               />
               <div>
                 <h2 className="text-lg font-semibold px-1 mb-4">
-                  Отзывы людей, на которых вы подписаны
+                  Рецензии друзей
                 </h2>
                 <FeedList
                   data={personalFeed.data}
@@ -99,13 +103,18 @@ export default function HomePage() {
               <div className="rounded-full bg-primary/10 p-5 mb-5">
                 <Sparkles className="w-10 h-10 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Присоединяйтесь к Movee</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                Присоединяйтесь к Movee
+              </h2>
               <p className="text-muted-foreground mb-8 max-w-sm">
                 Войдите, чтобы видеть отзывы людей, на которых подписаны, и
                 узнавать, что смотрят ваши друзья на этой неделе.
               </p>
               <div className="flex gap-3">
-                <Link href="/register" className={buttonVariants({ size: "lg" })}>
+                <Link
+                  href="/register"
+                  className={buttonVariants({ size: "lg" })}
+                >
                   Начать
                 </Link>
                 <Link
