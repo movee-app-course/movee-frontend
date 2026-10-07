@@ -29,11 +29,17 @@ export default function HomePage() {
 
       <Tabs defaultValue="general" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="general" className="flex items-center gap-2">
+          <TabsTrigger
+            value="general"
+            className="hover:cursor-pointer flex items-center gap-2"
+          >
             <Rss className="w-4 h-4" />
             Лента
           </TabsTrigger>
-          <TabsTrigger value="personal" className="flex items-center gap-2">
+          <TabsTrigger
+            value="personal"
+            className="hover:cursor-pointer flex items-center gap-2"
+          >
             <Sparkles className="w-4 h-4" />
             Для вас
           </TabsTrigger>
