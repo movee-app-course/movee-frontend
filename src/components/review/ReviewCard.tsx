@@ -1,10 +1,10 @@
-import { Review } from '@/types';
-import { tmdbImage, timeAgo } from '@/lib/utils';
-import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from 'lucide-react';
-import { SpoilerToggle } from './SpoilerToggle';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Review } from "@/types";
+import { tmdbImage, timeAgo } from "@/lib/utils";
+import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from "lucide-react";
+import { SpoilerToggle } from "./SpoilerToggle";
+import Link from "next/link";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ReviewCardProps {
   review: Review;
@@ -12,7 +12,7 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
-  const posterUrl = tmdbImage(review.movie?.poster_path, 'w92');
+  const posterUrl = tmdbImage(review.movie?.poster_path, "w92");
 
   return (
     <div className="group p-4 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 animate-in-up">
@@ -46,16 +46,27 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
 
       {/* User + Score row */}
       <div className="flex items-center justify-between mb-3">
-        <Link href={`/user/${review.user.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <Avatar className="h-9 w-9 ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
-            <AvatarImage src={review.user.avatarUrl || ''} />
+        <Link
+          href={`/user/${review.user.id}`}
+          className="group/profile flex items-center gap-3 hover:opacity-80 transition-opacity"
+        >
+          <Avatar className="h-9 w-9 ring-2 ring-transparent group-hover/profile:ring-primary/20 transition-all">
+            <AvatarImage src={review.user.avatarUrl || ""} />
             <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
-              {review.user.displayName ? review.user.displayName.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
+              {review.user.displayName ? (
+                review.user.displayName.charAt(0).toUpperCase()
+              ) : (
+                <UserIcon className="w-4 h-4" />
+              )}
             </AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-semibold leading-none">{review.user.displayName}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">@{review.user.username}</p>
+            <p className="text-sm font-semibold leading-none">
+              {review.user.displayName}
+            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              @{review.user.username}
+            </p>
           </div>
         </Link>
         <div className="text-right shrink-0">
@@ -82,7 +93,9 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
               <SpoilerToggle text={review.text} />
             </div>
           ) : (
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">{review.text}</p>
+            <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
+              {review.text}
+            </p>
           )}
         </div>
       )}
