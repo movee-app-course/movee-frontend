@@ -20,7 +20,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
       {showMovie && review.movie && (
         <Link
           href={`/movie/${review.movie.tmdb_id}`}
-          className="flex items-center gap-2 mb-3 pb-3 border-b text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="flex items-start gap-2 mb-3 pb-3 border-b text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           {posterUrl ? (
             <Image
@@ -35,12 +35,16 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
               <FilmIcon className="w-3 h-3" />
             </div>
           )}
-          <span className="font-medium line-clamp-1">{review.movie.title}</span>
-          {review.movie.release_date && (
-            <span className="shrink-0 text-xs opacity-70">
-              {new Date(review.movie.release_date).getFullYear()}
+          <div className="flex flex-col gap-1 min-w-0">
+            <span className="font-medium text-lg leading-5 text-foreground line-clamp-1">
+              {review.movie.title}
             </span>
-          )}
+            {review.movie.release_date && (
+              <span className="text-xs leading-4 text-muted-foreground">
+                {new Date(review.movie.release_date).getFullYear()}
+              </span>
+            )}
+          </div>
         </Link>
       )}
 
