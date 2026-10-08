@@ -89,6 +89,8 @@ jobs:
           host: ${{ steps.secrets.outputs.SERVER_HOST }}
           username: ${{ steps.secrets.outputs.SERVER_USER }}
           key: ${{ steps.secrets.outputs.SERVER_SSH_KEY }}
+          command_timeout: 30m
+          timeout: 60s
           envs: GHCR_PAT,GITHUB_ORG,DEPLOY_PATH,SERVICE_NAME
           script: |
             set -e
