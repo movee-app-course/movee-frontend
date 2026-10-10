@@ -1,16 +1,16 @@
-import Image from 'next/image';
-import {Movie} from '@/types';
-import {StarIcon} from 'lucide-react';
-import {tmdbImage} from '@/lib/utils';
+import Image from "next/image";
+import {Movie} from "@/types";
+import {StarIcon} from "lucide-react";
+import {tmdbImage} from "@/lib/utils";
 
 interface MovieDetailsProps {
   movie: Movie;
 }
 
 export function MovieDetails({movie}: MovieDetailsProps) {
-  const posterUrl = tmdbImage(movie.poster_path, 'w500');
+  const posterUrl = tmdbImage(movie.poster_path, "w500");
 
-  const backdropUrl = tmdbImage(movie.backdrop_path, 'w1280');
+  const backdropUrl = tmdbImage(movie.backdrop_path, "w1280");
 
   return (
     <div className="relative">
@@ -55,19 +55,19 @@ export function MovieDetails({movie}: MovieDetailsProps) {
           </h1>
 
           {movie.original_title && movie.original_title !== movie.title && (
-            <p className="text-xl text-muted-foreground mb-3">
+            <p className="text-lg text-muted-foreground mb-3">
               {movie.original_title}
             </p>
           )}
 
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {movie.release_date && (
-              <span className="text-lg font-semibold text-muted-foreground">
+              <span className="text-md font-semibold text-muted-foreground">
                 {new Date(movie.release_date).getFullYear()}
               </span>
             )}
             {movie.vote_average && Number(movie.vote_average) > 0 && (
-              <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 text-lg font-bold px-2 py-0.5 rounded-md">
+              <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 text-md font-bold px-2 py-0.5 rounded-md">
                 <StarIcon className="w-3 h-3 fill-current" />
                 {Number(movie.vote_average).toFixed(1)} TMDB
               </span>
@@ -77,7 +77,7 @@ export function MovieDetails({movie}: MovieDetailsProps) {
                 {movie.genres.map((g) => (
                   <span
                     key={g.id}
-                    className="bg-secondary text-secondary-foreground px-2.5 py-0.5 rounded-full text-lg font-medium"
+                    className="bg-secondary text-secondary-foreground px-2.5 py-0.5 rounded-full text-md font-medium"
                   >
                     {g.name}
                   </span>
