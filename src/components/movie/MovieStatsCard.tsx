@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Skeleton } from '@/components/ui/skeleton';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuthStore } from '@/stores/auth-store';
-import type { MovieStats } from '@/types';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useAuthStore } from "@/stores/auth-store";
+import type { MovieStats } from "@/types";
 
 interface MovieStatsCardProps {
   stats: MovieStats | undefined;
@@ -39,24 +39,42 @@ export function MovieStatsCard({ stats, isLoading }: MovieStatsCardProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Средняя оценка</p>
-          <p className="text-3xl font-bold">
-            {stats.averageScore ? stats.averageScore : '—'}
-            {stats.averageScore && <span className="text-base font-normal text-muted-foreground">/10</span>}
+          <p className="text-muted-foreground mb-1 text-xs tracking-wide uppercase">
+            Средняя оценка
           </p>
-          <p className="text-xs text-muted-foreground">{stats.totalRatings} оценок</p>
+          <p className="text-3xl font-bold">
+            {stats.averageScore ? stats.averageScore : "—"}
+            {stats.averageScore && (
+              <span className="text-muted-foreground text-base font-normal">
+                /10
+              </span>
+            )}
+          </p>
+          <p className="text-muted-foreground text-xs">
+            {stats.totalRatings} оценок
+          </p>
         </div>
 
-        {_hasHydrated && user && (stats.friendsWatched > 0 || stats.friendsAverageScore) && (
-          <div className="pt-3 border-t">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Оценка друзей</p>
-            <p className="text-3xl font-bold">
-              {stats.friendsAverageScore ? stats.friendsAverageScore : '—'}
-              {stats.friendsAverageScore && <span className="text-base font-normal text-muted-foreground">/10</span>}
-            </p>
-            <p className="text-xs text-muted-foreground">{stats.friendsWatched} друзей посмотрело</p>
-          </div>
-        )}
+        {_hasHydrated &&
+          user &&
+          (stats.friendsWatched > 0 || stats.friendsAverageScore) && (
+            <div className="border-t pt-3">
+              <p className="text-muted-foreground mb-1 text-xs tracking-wide uppercase">
+                Оценка друзей
+              </p>
+              <p className="text-3xl font-bold">
+                {stats.friendsAverageScore ? stats.friendsAverageScore : "—"}
+                {stats.friendsAverageScore && (
+                  <span className="text-muted-foreground text-base font-normal">
+                    /10
+                  </span>
+                )}
+              </p>
+              <p className="text-muted-foreground text-xs">
+                {stats.friendsWatched} друзей посмотрело
+              </p>
+            </div>
+          )}
       </CardContent>
     </Card>
   );

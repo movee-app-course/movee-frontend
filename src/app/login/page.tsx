@@ -1,25 +1,24 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Film, LoaderCircle } from "lucide-react";
-
-import { useLoginMutation } from "@/hooks/use-auth";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useLoginMutation } from "@/hooks/use-auth";
 
 const loginSchema = z.object({
   email: z.string().email("Введите корректный адрес электронной почты"),
@@ -49,16 +48,18 @@ export default function LoginPage() {
       router.push("/");
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
-      setError(e.response?.data?.message || "Не удалось войти. Попробуйте ещё раз.");
+      setError(
+        e.response?.data?.message || "Не удалось войти. Попробуйте ещё раз.",
+      );
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4">
       {/* Brand mark */}
-      <Link href="/" className="flex items-center gap-2 mb-8 group">
-        <div className="rounded-xl bg-primary/10 p-2 group-hover:bg-primary/20 transition-colors">
-          <Film className="h-6 w-6 text-primary" />
+      <Link href="/" className="group mb-8 flex items-center gap-2">
+        <div className="bg-primary/10 group-hover:bg-primary/20 rounded-xl p-2 transition-colors">
+          <Film className="text-primary h-6 w-6" />
         </div>
         <span className="text-xl font-bold">Movee</span>
       </Link>
@@ -82,7 +83,9 @@ export default function LoginPage() {
                 className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
-                <p className="text-xs text-destructive">{errors.email.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -96,13 +99,15 @@ export default function LoginPage() {
                 className={errors.password ? "border-destructive" : ""}
               />
               {errors.password && (
-                <p className="text-xs text-destructive">{errors.password.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
             {error && (
-              <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3">
-                <p className="text-sm text-destructive font-medium">{error}</p>
+              <div className="bg-destructive/10 border-destructive/20 rounded-lg border p-3">
+                <p className="text-destructive text-sm font-medium">{error}</p>
               </div>
             )}
 
@@ -124,9 +129,12 @@ export default function LoginPage() {
         </CardContent>
 
         <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             У вас нет аккаунта?{" "}
-            <Link href="/register" className="text-primary font-medium hover:underline">
+            <Link
+              href="/register"
+              className="text-primary font-medium hover:underline"
+            >
               Зарегистрироваться
             </Link>
           </p>

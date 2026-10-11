@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
-import { UserProfile } from '@/components/user/UserProfile';
-import { endpoints } from '@/lib/api/endpoints';
-import type { UserProfile as UserProfileData } from '@/hooks/use-social';
+import { notFound } from "next/navigation";
+import { UserProfile } from "@/components/user/UserProfile";
+import type { UserProfile as UserProfileData } from "@/hooks/use-social";
+import { endpoints } from "@/lib/api/endpoints";
 
 interface UserPageProps {
   params: Promise<{ id: string }>;
@@ -16,7 +16,7 @@ export default async function UserPage({ params }: UserPageProps) {
   let initialData: UserProfileData | null = null;
   try {
     const res = await fetch(endpoints.users.byId(userId), {
-      next: { revalidate: 30 } // Cache profile for 30s
+      next: { revalidate: 30 }, // Cache profile for 30s
     });
     if (res.ok) {
       initialData = await res.json();

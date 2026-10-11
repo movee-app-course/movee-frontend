@@ -1,8 +1,8 @@
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
 import { endpoints } from "@/lib/api/endpoints";
 import { useAuthStore } from "@/stores/auth-store";
 import { FeedItem } from "@/types";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 // API response matches { feed: FeedItem[], nextCursor: number | null }
 // So we need a custom interface for the response to map it to CursorPaginatedResponse or use it directly

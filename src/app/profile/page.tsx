@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useAuthStore } from '@/stores/auth-store';
-import { UserProfile } from '@/components/user/UserProfile';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { UserProfile } from "@/components/user/UserProfile";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function ProfilePage() {
   const { user, isLoading } = useAuthStore();
@@ -11,7 +11,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!isLoading && user === null) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [user, isLoading, router]);
 

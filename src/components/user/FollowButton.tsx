@@ -1,9 +1,14 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { useFollowMutation, useUnfollowMutation, useUserProfile, type UserProfile } from '@/hooks/use-social';
-import { useAuthStore } from '@/stores/auth-store';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  useFollowMutation,
+  useUnfollowMutation,
+  useUserProfile,
+  type UserProfile,
+} from "@/hooks/use-social";
+import { useAuthStore } from "@/stores/auth-store";
 
 interface FollowButtonProps {
   userId: number;
@@ -12,8 +17,12 @@ interface FollowButtonProps {
   className?: string;
 }
 
-export function FollowButton({ userId, isFollowing: isFollowingProp, className }: FollowButtonProps) {
-  const currentUser = useAuthStore(state => state.user);
+export function FollowButton({
+  userId,
+  isFollowing: isFollowingProp,
+  className,
+}: FollowButtonProps) {
+  const currentUser = useAuthStore((state) => state.user);
   const router = useRouter();
 
   // Read from cache so optimistic updates propagate immediately.
@@ -34,7 +43,7 @@ export function FollowButton({ userId, isFollowing: isFollowingProp, className }
 
   const handleToggleFollow = () => {
     if (!currentUser) {
-      router.push('/login');
+      router.push("/login");
       return;
     }
 
@@ -47,13 +56,13 @@ export function FollowButton({ userId, isFollowing: isFollowingProp, className }
 
   return (
     <Button
-      variant={isFollowing ? 'secondary' : 'default'}
+      variant={isFollowing ? "secondary" : "default"}
       size="sm"
       onClick={handleToggleFollow}
       disabled={isLoading}
       className={className}
     >
-      {isFollowing ? 'Подписан' : 'Подписаться'}
+      {isFollowing ? "Подписан" : "Подписаться"}
     </Button>
   );
 }

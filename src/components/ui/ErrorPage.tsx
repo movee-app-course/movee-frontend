@@ -23,16 +23,19 @@ export function ErrorPage({
 }: ErrorPageProps) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+      <div className="bg-destructive/10 text-destructive mb-6 flex h-16 w-16 items-center justify-center rounded-full">
         {icon}
       </div>
 
       <h2 className="mb-2 text-2xl font-bold tracking-tight">{title}</h2>
-      <p className="mb-6 max-w-md text-muted-foreground">{description}</p>
+      <p className="text-muted-foreground mb-6 max-w-md">{description}</p>
 
       <div className="flex gap-3">
         <Button onClick={onReset}>{resetLabel}</Button>
-        <Button variant="outline" onClick={() => (window.location.href = backHref)}>
+        <Button
+          variant="outline"
+          onClick={() => (window.location.href = backHref)}
+        >
           {backLabel}
         </Button>
       </div>

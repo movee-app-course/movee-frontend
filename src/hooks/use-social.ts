@@ -1,7 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '@/lib/api-client';
-import { endpoints } from '@/lib/api/endpoints';
-import { User, MovieStats, PaginatedResponse, Review, Movie } from '@/types';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import apiClient from "@/lib/api-client";
+import { endpoints } from "@/lib/api/endpoints";
+import { Movie, MovieStats, PaginatedResponse, Review, User } from "@/types";
 
 // Extended user type from API with stats and following info
 export interface UserProfile extends User {
@@ -41,9 +41,11 @@ export interface FollowUser extends User {
 
 export const useUserProfile = (userId: number, initialData?: UserProfile) => {
   return useQuery({
-    queryKey: ['users', userId],
+    queryKey: ["users", userId],
     queryFn: async () => {
-      const { data } = await apiClient.get<UserProfile>(endpoints.users.byId(userId));
+      const { data } = await apiClient.get<UserProfile>(
+        endpoints.users.byId(userId),
+      );
       return data;
     },
     enabled: !!userId,
@@ -51,11 +53,17 @@ export const useUserProfile = (userId: number, initialData?: UserProfile) => {
   });
 };
 
-export const useUserReviews = (userId: number, page: number = 1, limit: number = 20) => {
+export const useUserReviews = (
+  userId: number,
+  page: number = 1,
+  limit: number = 20,
+) => {
   return useQuery({
-    queryKey: ['users', userId, 'reviews', page],
+    queryKey: ["users", userId, "reviews", page],
     queryFn: async () => {
-      const { data } = await apiClient.get<PaginatedResponse<Review & { movie: Movie, user: User }>>(endpoints.users.reviews(userId), {
+      const { data } = await apiClient.get<
+        PaginatedResponse<Review & { movie: Movie; user: User }>
+      >(endpoints.users.reviews(userId), {
         params: { page, limit },
       });
       return data;
@@ -64,11 +72,20 @@ export const useUserReviews = (userId: number, page: number = 1, limit: number =
   });
 };
 
-export const useUserWatchlist = (userId: number, page: number = 1, limit: number = 20) => {
+export const useUserWatchlist = (
+  userId: number,
+  page: number = 1,
+  limit: number = 20,
+) => {
   return useQuery({
-    queryKey: ['users', userId, 'watchlist', page],
+    queryKey: ["users", userId, "watchlist", page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ movies: WatchlistMovie[], total: number, page: number, limit: number }>(endpoints.users.watchlist(userId), {
+      const { data } = await apiClient.get<{
+        movies: WatchlistMovie[];
+        total: number;
+        page: number;
+        limit: number;
+      }>(endpoints.users.watchlist(userId), {
         params: { page, limit },
       });
       return data;
@@ -77,11 +94,20 @@ export const useUserWatchlist = (userId: number, page: number = 1, limit: number
   });
 };
 
-export const useUserWatched = (userId: number, page: number = 1, limit: number = 20) => {
+export const useUserWatched = (
+  userId: number,
+  page: number = 1,
+  limit: number = 20,
+) => {
   return useQuery({
-    queryKey: ['users', userId, 'watched', page],
+    queryKey: ["users", userId, "watched", page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ movies: WatchedMovie[], total: number, page: number, limit: number }>(endpoints.users.watched(userId), {
+      const { data } = await apiClient.get<{
+        movies: WatchedMovie[];
+        total: number;
+        page: number;
+        limit: number;
+      }>(endpoints.users.watched(userId), {
         params: { page, limit },
       });
       return data;
@@ -90,11 +116,20 @@ export const useUserWatched = (userId: number, page: number = 1, limit: number =
   });
 };
 
-export const useFollowers = (userId: number, page: number = 1, limit: number = 20) => {
+export const useFollowers = (
+  userId: number,
+  page: number = 1,
+  limit: number = 20,
+) => {
   return useQuery({
-    queryKey: ['users', userId, 'followers', page],
+    queryKey: ["users", userId, "followers", page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(endpoints.users.followers(userId), {
+      const { data } = await apiClient.get<{
+        users: FollowUser[];
+        total: number;
+        page: number;
+        limit: number;
+      }>(endpoints.users.followers(userId), {
         params: { page, limit },
       });
       return data;
@@ -103,11 +138,20 @@ export const useFollowers = (userId: number, page: number = 1, limit: number = 2
   });
 };
 
-export const useFollowing = (userId: number, page: number = 1, limit: number = 20) => {
+export const useFollowing = (
+  userId: number,
+  page: number = 1,
+  limit: number = 20,
+) => {
   return useQuery({
-    queryKey: ['users', userId, 'following', page],
+    queryKey: ["users", userId, "following", page],
     queryFn: async () => {
-      const { data } = await apiClient.get<{ users: FollowUser[], total: number, page: number, limit: number }>(endpoints.users.following(userId), {
+      const { data } = await apiClient.get<{
+        users: FollowUser[];
+        total: number;
+        page: number;
+        limit: number;
+      }>(endpoints.users.following(userId), {
         params: { page, limit },
       });
       return data;
@@ -128,13 +172,13 @@ export const useFollowMutation = (userId: number) => {
     },
     onMutate: async () => {
       // Cancel any in-flight refetches so they don't overwrite our optimistic update
-      await queryClient.cancelQueries({ queryKey: ['users', userId] });
+      await queryClient.cancelQueries({ queryKey: ["users", userId] });
 
       // Snapshot the previous value for potential rollback
-      const previous = queryClient.getQueryData<UserProfile>(['users', userId]);
+      const previous = queryClient.getQueryData<UserProfile>(["users", userId]);
 
       // Optimistically update the cache immediately
-      queryClient.setQueryData<UserProfile>(['users', userId], (old) => {
+      queryClient.setQueryData<UserProfile>(["users", userId], (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -151,12 +195,12 @@ export const useFollowMutation = (userId: number) => {
     onError: (_err, _vars, context) => {
       // Roll back to the snapshot if the mutation fails
       if (context?.previous) {
-        queryClient.setQueryData(['users', userId], context.previous);
+        queryClient.setQueryData(["users", userId], context.previous);
       }
     },
     onSettled: () => {
       // Always sync with server after mutation (success or error)
-      queryClient.invalidateQueries({ queryKey: ['users', userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", userId] });
     },
   });
 };
@@ -170,11 +214,11 @@ export const useUnfollowMutation = (userId: number) => {
       return data;
     },
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['users', userId] });
+      await queryClient.cancelQueries({ queryKey: ["users", userId] });
 
-      const previous = queryClient.getQueryData<UserProfile>(['users', userId]);
+      const previous = queryClient.getQueryData<UserProfile>(["users", userId]);
 
-      queryClient.setQueryData<UserProfile>(['users', userId], (old) => {
+      queryClient.setQueryData<UserProfile>(["users", userId], (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -190,11 +234,11 @@ export const useUnfollowMutation = (userId: number) => {
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(['users', userId], context.previous);
+        queryClient.setQueryData(["users", userId], context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['users', userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", userId] });
     },
   });
 };
