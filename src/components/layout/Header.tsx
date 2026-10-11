@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Film, LogOut, User as UserIcon } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
@@ -11,9 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/auth-store";
-import { Film, LogOut, User as UserIcon } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 
 export function Header() {
   const { user, logout } = useAuthStore();
@@ -21,8 +21,8 @@ export function Header() {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center mx-auto px-4 sm:px-8">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+      <div className="container mx-auto flex h-14 items-center px-4 sm:px-8">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Film className="h-6 w-6" />
@@ -31,7 +31,7 @@ export function Header() {
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               href="/"
-              className={`transition-colors hover:text-foreground/80 ${
+              className={`hover:text-foreground/80 transition-colors ${
                 pathname === "/" ? "text-foreground" : "text-foreground/60"
               }`}
             >
@@ -39,7 +39,7 @@ export function Header() {
             </Link>
             <Link
               href="/search"
-              className={`transition-colors hover:text-foreground/80 ${
+              className={`hover:text-foreground/80 transition-colors ${
                 pathname?.startsWith("/search")
                   ? "text-foreground"
                   : "text-foreground/60"
@@ -62,8 +62,8 @@ export function Header() {
 
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="rounded-full p-0 border-0 bg-transparent outline-none focus:outline-none focus:ring-0">
-                  <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-transparent hover:ring-primary/40 transition-all">
+                <DropdownMenuTrigger className="rounded-full border-0 bg-transparent p-0 outline-none focus:ring-0 focus:outline-none">
+                  <Avatar className="hover:ring-primary/40 h-8 w-8 cursor-pointer ring-2 ring-transparent transition-all">
                     <AvatarImage
                       src={user.avatarUrl || ""}
                       alt={user.displayName}
@@ -77,7 +77,7 @@ export function Header() {
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
                       <p className="font-medium">{user.displayName}</p>
-                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      <p className="text-muted-foreground w-[200px] truncate text-sm">
                         @{user.username}
                       </p>
                     </div>
@@ -91,7 +91,7 @@ export function Header() {
                     <span>Профиль</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="text-red-600 focus:text-red-600 cursor-pointer"
+                    className="cursor-pointer text-red-600 focus:text-red-600"
                     onClick={() => logout()}
                   >
                     <LogOut className="mr-2 h-4 w-4" />

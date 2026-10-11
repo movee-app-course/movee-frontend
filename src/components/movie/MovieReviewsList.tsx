@@ -1,21 +1,24 @@
-'use client';
+"use client";
 
-import { Skeleton } from '@/components/ui/skeleton';
-import { ReviewCard } from '@/components/review/ReviewCard';
-import type { Review } from '@/types';
+import { ReviewCard } from "@/components/review/ReviewCard";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { Review } from "@/types";
 
 interface MovieReviewsListProps {
   reviews: Review[] | undefined;
   isLoading: boolean;
 }
 
-export function MovieReviewsList({ reviews, isLoading }: MovieReviewsListProps) {
+export function MovieReviewsList({
+  reviews,
+  isLoading,
+}: MovieReviewsListProps) {
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">
+      <h3 className="mb-4 text-xl font-bold">
         Отзывы
         {reviews && reviews.length > 0 && (
-          <span className="text-base font-normal text-muted-foreground ml-2">
+          <span className="text-muted-foreground ml-2 text-base font-normal">
             ({reviews.length})
           </span>
         )}
@@ -24,7 +27,7 @@ export function MovieReviewsList({ reviews, isLoading }: MovieReviewsListProps) 
       {isLoading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-4 border rounded-xl space-y-3">
+            <div key={i} className="space-y-3 rounded-xl border p-4">
               <div className="flex items-center gap-3">
                 <Skeleton className="h-9 w-9 rounded-full" />
                 <div className="space-y-1.5">
@@ -38,12 +41,12 @@ export function MovieReviewsList({ reviews, isLoading }: MovieReviewsListProps) 
         </div>
       ) : reviews && reviews.length > 0 ? (
         <div className="space-y-4">
-          {reviews.map(review => (
+          {reviews.map((review) => (
             <ReviewCard key={review.id} review={review} showMovie={false} />
           ))}
         </div>
       ) : (
-        <div className="text-center py-10 px-4 border rounded-xl bg-card/50">
+        <div className="bg-card/50 rounded-xl border px-4 py-10 text-center">
           <p className="text-muted-foreground text-sm">
             Отзывов пока нет. Будьте первым!
           </p>

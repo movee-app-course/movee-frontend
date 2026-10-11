@@ -1,11 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRateMovie, useDeleteRating } from '@/hooks/use-reviews';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { StarIcon, Trash2Icon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,8 +12,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { StarIcon, Trash2Icon } from 'lucide-react';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useDeleteRating, useRateMovie } from "@/hooks/use-reviews";
 
 interface ReviewFormProps {
   movieId: number;
@@ -26,9 +26,14 @@ interface ReviewFormProps {
   initialSpoilers?: boolean;
 }
 
-export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers }: ReviewFormProps) {
+export function ReviewForm({
+  movieId,
+  initialScore,
+  initialText,
+  initialSpoilers,
+}: ReviewFormProps) {
   const [score, setScore] = useState<number | undefined>(initialScore);
-  const [text, setText] = useState(initialText || '');
+  const [text, setText] = useState(initialText || "");
   const [hasSpoilers, setHasSpoilers] = useState(initialSpoilers || false);
 
   const rateMutation = useRateMovie(movieId);
@@ -43,13 +48,18 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
   const handleConfirmDelete = () => {
     deleteMutation.mutate();
     setScore(undefined);
-    setText('');
+    setText("");
     setHasSpoilers(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-lg bg-card">
-      <h3 className="font-semibold text-lg">{initialScore ? 'Обновить отзыв' : 'Оценить фильм'}</h3>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-card space-y-4 rounded-lg border p-4"
+    >
+      <h3 className="text-lg font-semibold">
+        {initialScore ? "Обновить отзыв" : "Оценить фильм"}
+      </h3>
 
       <div className="flex items-center gap-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
@@ -60,11 +70,11 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
             className="focus:outline-none"
           >
             <StarIcon
-              className={`w-6 h-6 transition-colors ${score && score >= val ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground hover:text-yellow-200'}`}
+              className={`h-6 w-6 transition-colors ${score && score >= val ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground hover:text-yellow-200"}`}
             />
           </button>
         ))}
-        {score && <span className="ml-2 font-bold text-lg">{score}/10</span>}
+        {score && <span className="ml-2 text-lg font-bold">{score}/10</span>}
       </div>
 
       <div className="space-y-2">
@@ -77,7 +87,11 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
           rows={3}
           disabled={!score}
         />
-        {!score && <p className="text-xs text-muted-foreground">Сначала выберите оценку, чтобы написать отзыв.</p>}
+        {!score && (
+          <p className="text-muted-foreground text-xs">
+            Сначала выберите оценку, чтобы написать отзыв.
+          </p>
+        )}
       </div>
 
       {text.length > 0 && (
@@ -87,7 +101,10 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
             checked={hasSpoilers}
             onCheckedChange={(checked) => setHasSpoilers(checked as boolean)}
           />
-          <Label htmlFor="spoilers" className="text-sm font-normal cursor-pointer">
+          <Label
+            htmlFor="spoilers"
+            className="cursor-pointer text-sm font-normal"
+          >
             Этот отзыв содержит спойлеры
           </Label>
         </div>
@@ -95,27 +112,37 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
 
       <div className="flex gap-2">
         <Button type="submit" disabled={!score || rateMutation.isPending}>
-          {rateMutation.isPending ? 'Сохранение...' : 'Сохранить'}
+          {rateMutation.isPending ? "Сохранение..." : "Сохранить"}
         </Button>
 
         {initialScore && (
           <AlertDialog>
             <AlertDialogTrigger
-              render={<Button type="button" variant="destructive" disabled={deleteMutation.isPending} />}
+              render={
+                <Button
+                  type="button"
+                  variant="destructive"
+                  disabled={deleteMutation.isPending}
+                />
+              }
             >
-              <Trash2Icon className="w-4 h-4 mr-2" />
+              <Trash2Icon className="mr-2 h-4 w-4" />
               Удалить
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>Удалить отзыв?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Это навсегда удалит вашу оценку и отзыв на этот фильм. Действие нельзя отменить.
+                  Это навсегда удалит вашу оценку и отзыв на этот фильм.
+                  Действие нельзя отменить.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Отмена</AlertDialogCancel>
-                <AlertDialogAction variant="destructive" onClick={handleConfirmDelete}>
+                <AlertDialogAction
+                  variant="destructive"
+                  onClick={handleConfirmDelete}
+                >
                   Удалить
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -124,7 +151,9 @@ export function ReviewForm({ movieId, initialScore, initialText, initialSpoilers
         )}
       </div>
 
-      {rateMutation.isError && <p className="text-sm text-red-500">Не удалось сохранить отзыв.</p>}
+      {rateMutation.isError && (
+        <p className="text-sm text-red-500">Не удалось сохранить отзыв.</p>
+      )}
     </form>
   );
 }

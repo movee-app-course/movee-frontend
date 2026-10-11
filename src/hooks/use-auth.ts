@@ -16,14 +16,17 @@ export function useLoginMutation() {
 
   return useMutation({
     mutationFn: async (credentials: LoginPayload) => {
-      const { data } = await apiClient.post<AuthResponse>(endpoints.auth.login, credentials);
+      const { data } = await apiClient.post<AuthResponse>(
+        endpoints.auth.login,
+        credentials,
+      );
       return data;
     },
     onSuccess: (data) => {
       setUser(data.user, data.token);
       // Invalidate only auth-dependent queries, not public data (movies, search)
-      queryClient.invalidateQueries({ queryKey: ['feed'] });
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }
@@ -34,14 +37,17 @@ export function useRegisterMutation() {
 
   return useMutation({
     mutationFn: async (userData: RegisterPayload) => {
-      const { data } = await apiClient.post<AuthResponse>(endpoints.auth.register, userData);
+      const { data } = await apiClient.post<AuthResponse>(
+        endpoints.auth.register,
+        userData,
+      );
       return data;
     },
     onSuccess: (data) => {
       setUser(data.user, data.token);
       // Invalidate only auth-dependent queries, not public data (movies, search)
-      queryClient.invalidateQueries({ queryKey: ['feed'] });
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }

@@ -1,10 +1,10 @@
-import { Review } from "@/types";
-import { tmdbImage, timeAgo } from "@/lib/utils";
-import { StarIcon, UserIcon, FilmIcon, AlertTriangleIcon } from "lucide-react";
-import { SpoilerToggle } from "./SpoilerToggle";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { AlertTriangleIcon, FilmIcon, StarIcon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { timeAgo, tmdbImage } from "@/lib/utils";
+import { Review } from "@/types";
+import { SpoilerToggle } from "./SpoilerToggle";
 
 interface ReviewCardProps {
   review: Review;
@@ -15,12 +15,12 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
   const posterUrl = tmdbImage(review.movie?.poster_path, "w92");
 
   return (
-    <div className="p-4 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 animate-in-up">
+    <div className="bg-card text-card-foreground hover:border-primary/30 animate-in-up rounded-xl border p-4 shadow-sm transition-all duration-200 hover:shadow-md">
       {/* Movie info strip (if showMovie and movie available) */}
       {showMovie && review.movie && (
         <Link
           href={`/movie/${review.movie.tmdb_id}`}
-          className="flex items-start gap-2 mb-3 pb-3 border-b text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="text-muted-foreground hover:text-foreground mb-3 flex items-start gap-2 border-b pb-3 text-sm transition-colors"
         >
           {posterUrl ? (
             <Image
@@ -28,19 +28,19 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
               alt={review.movie.title}
               width={28}
               height={42}
-              className="rounded object-cover shrink-0"
+              className="shrink-0 rounded object-cover"
             />
           ) : (
-            <div className="w-7 h-10 rounded bg-muted flex items-center justify-center shrink-0">
-              <FilmIcon className="w-3 h-3" />
+            <div className="bg-muted flex h-10 w-7 shrink-0 items-center justify-center rounded">
+              <FilmIcon className="h-3 w-3" />
             </div>
           )}
-          <div className="flex flex-col gap-1 min-w-0">
-            <span className="font-medium text-lg leading-5 text-foreground line-clamp-1">
+          <div className="flex min-w-0 flex-col gap-1">
+            <span className="text-foreground line-clamp-1 text-lg leading-5 font-medium">
               {review.movie.title}
             </span>
             {review.movie.release_date && (
-              <span className="text-xs leading-4 text-muted-foreground">
+              <span className="text-muted-foreground text-xs leading-4">
                 {new Date(review.movie.release_date).getFullYear()}
               </span>
             )}
@@ -49,37 +49,37 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
       )}
 
       {/* User + Score row */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="mb-3 flex items-center justify-between">
         <Link
           href={`/user/${review.user.id}`}
-          className="group flex items-center gap-3 hover:opacity-80 transition-opacity"
+          className="group flex items-center gap-3 transition-opacity hover:opacity-80"
         >
-          <Avatar className="h-9 w-9 ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
+          <Avatar className="group-hover:ring-primary/20 h-9 w-9 ring-2 ring-transparent transition-all">
             <AvatarImage src={review.user.avatarUrl || ""} />
             <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
               {review.user.displayName ? (
                 review.user.displayName.charAt(0).toUpperCase()
               ) : (
-                <UserIcon className="w-4 h-4" />
+                <UserIcon className="h-4 w-4" />
               )}
             </AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-semibold leading-none">
+            <p className="text-sm leading-none font-semibold">
               {review.user.displayName}
             </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-muted-foreground mt-0.5 text-xs">
               @{review.user.username}
             </p>
           </div>
         </Link>
-        <div className="text-right shrink-0">
-          <div className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300 px-2.5 py-1 rounded-lg text-sm font-bold">
-            <StarIcon className="w-3.5 h-3.5 fill-current" />
+        <div className="shrink-0 text-right">
+          <div className="inline-flex items-center gap-1 rounded-lg bg-amber-100 px-2.5 py-1 text-sm font-bold text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">
+            <StarIcon className="h-3.5 w-3.5 fill-current" />
             {review.score}
             <span className="text-xs font-normal opacity-60">/10</span>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-muted-foreground mt-1 text-xs">
             {timeAgo(review.createdAt)}
           </p>
         </div>
@@ -90,14 +90,14 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
         <div className="mt-2">
           {review.hasSpoilers ? (
             <div>
-              <div className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 mb-1.5">
-                <AlertTriangleIcon className="w-3.5 h-3.5" />
+              <div className="mb-1.5 flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
+                <AlertTriangleIcon className="h-3.5 w-3.5" />
                 <span>Содержит спойлеры</span>
               </div>
               <SpoilerToggle text={review.text} />
             </div>
           ) : (
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
+            <p className="text-foreground/85 text-sm leading-relaxed whitespace-pre-wrap">
               {review.text}
             </p>
           )}

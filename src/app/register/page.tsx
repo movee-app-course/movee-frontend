@@ -1,25 +1,24 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Film, LoaderCircle } from "lucide-react";
-
-import { useRegisterMutation } from "@/hooks/use-auth";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useRegisterMutation } from "@/hooks/use-auth";
 
 const registerSchema = z.object({
   email: z.string().email("Введите корректный адрес электронной почты"),
@@ -27,7 +26,10 @@ const registerSchema = z.object({
     .string()
     .min(3, "Имя пользователя должно содержать хотя бы 3 символа")
     .max(50, "Имя пользователя должно содержать не более 50 символов")
-    .regex(/^[a-z0-9_]+$/, "Только малые латинские буквы, цифры и подчёркивания"),
+    .regex(
+      /^[a-z0-9_]+$/,
+      "Только малые латинские буквы, цифры и подчёркивания",
+    ),
   displayName: z
     .string()
     .min(1, "Отображаемое имя обязательно")
@@ -58,16 +60,19 @@ export default function RegisterPage() {
       router.push("/");
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
-      setError(e.response?.data?.message || "Не удалось зарегистрироваться. Попробуйте ещё раз.");
+      setError(
+        e.response?.data?.message ||
+          "Не удалось зарегистрироваться. Попробуйте ещё раз.",
+      );
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4">
+    <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4">
       {/* Brand mark */}
-      <Link href="/" className="flex items-center gap-2 mb-8 group">
-        <div className="rounded-xl bg-primary/10 p-2 group-hover:bg-primary/20 transition-colors">
-          <Film className="h-6 w-6 text-primary" />
+      <Link href="/" className="group mb-8 flex items-center gap-2">
+        <div className="bg-primary/10 group-hover:bg-primary/20 rounded-xl p-2 transition-colors">
+          <Film className="text-primary h-6 w-6" />
         </div>
         <span className="text-xl font-bold">Movee</span>
       </Link>
@@ -75,7 +80,9 @@ export default function RegisterPage() {
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl font-bold">Создать аккаунт</CardTitle>
-          <CardDescription>Присоединяйтесь к Movee и начните вести список кино</CardDescription>
+          <CardDescription>
+            Присоединяйтесь к Movee и начните вести список кино
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -91,7 +98,9 @@ export default function RegisterPage() {
                 className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
-                <p className="text-xs text-destructive">{errors.email.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -106,14 +115,18 @@ export default function RegisterPage() {
                 className={errors.displayName ? "border-destructive" : ""}
               />
               {errors.displayName && (
-                <p className="text-xs text-destructive">{errors.displayName.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.displayName.message}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="username">Имя пользователя</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">@</span>
+                <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2 text-sm">
+                  @
+                </span>
                 <Input
                   id="username"
                   type="text"
@@ -124,7 +137,9 @@ export default function RegisterPage() {
                 />
               </div>
               {errors.username && (
-                <p className="text-xs text-destructive">{errors.username.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.username.message}
+                </p>
               )}
             </div>
 
@@ -138,13 +153,15 @@ export default function RegisterPage() {
                 className={errors.password ? "border-destructive" : ""}
               />
               {errors.password && (
-                <p className="text-xs text-destructive">{errors.password.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
             {error && (
-              <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3">
-                <p className="text-sm text-destructive font-medium">{error}</p>
+              <div className="bg-destructive/10 border-destructive/20 rounded-lg border p-3">
+                <p className="text-destructive text-sm font-medium">{error}</p>
               </div>
             )}
 
@@ -166,9 +183,12 @@ export default function RegisterPage() {
         </CardContent>
 
         <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             У вас уже есть аккаунт?{" "}
-            <Link href="/login" className="text-primary font-medium hover:underline">
+            <Link
+              href="/login"
+              className="text-primary font-medium hover:underline"
+            >
               Войти
             </Link>
           </p>

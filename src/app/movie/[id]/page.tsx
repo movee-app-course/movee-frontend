@@ -31,9 +31,6 @@ export default async function MoviePage({ params }: MoviePageProps) {
   }
 
   return (
-    <MoviePageClient
-      movieId={movieId}
-      initialMovieData={initialMovieData}
-    />
+    <MoviePageClient movieId={movieId} initialMovieData={initialMovieData} />
   );
 }

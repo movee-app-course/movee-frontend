@@ -19,7 +19,7 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // ──── Response interceptor ────────────────────────────────────
@@ -30,7 +30,7 @@ apiClient.interceptors.response.use(
   (error) => {
     // Re-throw so React Query / caller can handle it
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

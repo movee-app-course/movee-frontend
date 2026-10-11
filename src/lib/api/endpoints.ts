@@ -1,6 +1,7 @@
-const BASE = typeof window === 'undefined'
-  ? (process.env.API_URL || 'http://backend_dev:3001/api')
-  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api');
+const BASE =
+  typeof window === "undefined"
+    ? process.env.API_URL || "http://backend_dev:3001/api"
+    : process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
 // if (!BASE) throw new Error('NEXT_PUBLIC_API_URL is not defined');
 
 /**
@@ -12,35 +13,35 @@ const BASE = typeof window === 'undefined'
  */
 export const endpoints = {
   auth: {
-    login:    `${BASE}/auth/login`,
+    login: `${BASE}/auth/login`,
     register: `${BASE}/auth/register`,
-    logout:   `${BASE}/auth/logout`,
-    me:       `${BASE}/auth/me`,
+    logout: `${BASE}/auth/logout`,
+    me: `${BASE}/auth/me`,
   },
 
   movies: {
-    search:    (q: string) => `${BASE}/movies/search?q=${encodeURIComponent(q)}`,
-    byId:      (id: number) => `${BASE}/movies/${id}`,
-    stats:     (id: number) => `${BASE}/movies/${id}/stats`,
-    reviews:   (id: number) => `${BASE}/movies/${id}/reviews`,
-    rate:      (id: number) => `${BASE}/movies/${id}/rate`,
+    search: (q: string) => `${BASE}/movies/search?q=${encodeURIComponent(q)}`,
+    byId: (id: number) => `${BASE}/movies/${id}`,
+    stats: (id: number) => `${BASE}/movies/${id}/stats`,
+    reviews: (id: number) => `${BASE}/movies/${id}/reviews`,
+    rate: (id: number) => `${BASE}/movies/${id}/rate`,
     watchlist: (id: number) => `${BASE}/movies/${id}/watchlist`,
-    watched:   (id: number) => `${BASE}/movies/${id}/watched`,
+    watched: (id: number) => `${BASE}/movies/${id}/watched`,
   },
 
   users: {
-    byId:      (id: number) => `${BASE}/users/${id}`,
-    reviews:   (id: number) => `${BASE}/users/${id}/reviews`,
+    byId: (id: number) => `${BASE}/users/${id}`,
+    reviews: (id: number) => `${BASE}/users/${id}/reviews`,
     watchlist: (id: number) => `${BASE}/users/${id}/watchlist`,
-    watched:   (id: number) => `${BASE}/users/${id}/watched`,
+    watched: (id: number) => `${BASE}/users/${id}/watched`,
     followers: (id: number) => `${BASE}/users/${id}/followers`,
     following: (id: number) => `${BASE}/users/${id}/following`,
-    follow:    (id: number) => `${BASE}/users/${id}/follow`,
+    follow: (id: number) => `${BASE}/users/${id}/follow`,
   },
 
   feed: {
-    general:  `${BASE}/feed`,
+    general: `${BASE}/feed`,
     personal: `${BASE}/feed/personal`,
-    popular:  `${BASE}/feed/popular`,
+    popular: `${BASE}/feed/popular`,
   },
 } as const;
