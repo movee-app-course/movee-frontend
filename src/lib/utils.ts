@@ -23,8 +23,11 @@ export function tmdbImage(
     | "w1280"
     | "original" = "w500",
 ): string | null {
-  if (!path) return null;
-  return `https://image.tmdb.org/t/p/${size}${path}`;
+  if (!path) {
+    return null
+  };
+  const base = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE || "https://image.tmdb.org/t/p";
+  return `${base}/${size}${path}`;
 }
 
 /**
