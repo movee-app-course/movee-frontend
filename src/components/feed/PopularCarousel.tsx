@@ -7,7 +7,7 @@ import { tmdbImage } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface PopularCarouselProps {
   movies: PopularMovieStats[];
@@ -43,9 +43,23 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
       left: direction === "left" ? -400 : 400,
       behavior: "smooth",
     });
-
-    setTimeout(updateScrollState, 350);
   };
+
+  useEffect(() => {
+    const viewport = carouselRef.current?.querySelector(
+      '[data-slot="scroll-area-viewport"]',
+    );
+
+    if (!(viewport instanceof HTMLElement)) return;
+
+    updateScrollState();
+
+    viewport.addEventListener("scroll", updateScrollState);
+
+    return () => {
+      viewport.removeEventListener("scroll", updateScrollState);
+    };
+  }, [movies]);
 
   if (isLoading) {
     return (
@@ -118,7 +132,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
           <button
             type="button"
             onClick={() => scroll("left")}
-            className="bg-background/90 hover:bg-background absolute top-1/2 left-2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border shadow-sm md:flex"
+            className="bg-background/90 hover:bg-background absolute top-[90px] left-2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border shadow-sm md:flex"
             aria-label="Прокрутить влево"
           >
             <ChevronLeftIcon className="h-5 w-5" />
@@ -129,7 +143,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
           <button
             type="button"
             onClick={() => scroll("right")}
-            className="bg-background/90 hover:bg-background absolute top-1/2 right-2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border shadow-sm md:flex"
+            className="bg-background/90 hover:bg-background absolute top-[90px] right-2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border shadow-sm md:flex"
             aria-label="Прокрутить вправо"
           >
             <ChevronRightIcon className="h-5 w-5" />
