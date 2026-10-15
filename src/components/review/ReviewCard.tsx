@@ -14,6 +14,13 @@ interface ReviewCardProps {
 export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
   const posterUrl = tmdbImage(review.movie?.poster_path, "w92");
 
+  const scoreColor =
+  review.score <= 3
+    ? "bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300"
+    : review.score <= 6
+      ? "bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300"
+      : "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
+
   return (
     <div className="bg-card text-card-foreground hover:border-primary/30 animate-in-up rounded-xl border p-4 shadow-sm transition-all duration-200 hover:shadow-md">
       {/* Movie info strip (if showMovie and movie available) */}
@@ -74,7 +81,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
           </div>
         </Link>
         <div className="shrink-0 text-right">
-          <div className="inline-flex items-center gap-1 rounded-lg bg-amber-100 px-2.5 py-1 text-sm font-bold text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">
+          <div className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-sm font-bold ${scoreColor}`}>
             <StarIcon className="h-3.5 w-3.5 fill-current" />
             {review.score}
             <span className="text-xs font-normal opacity-60">/10</span>
