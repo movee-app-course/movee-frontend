@@ -36,7 +36,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
             </div>
           )}
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="text-foreground line-clamp-1 text-lg leading-5 font-medium">
+            <span className="text-foreground line-clamp-1 break-all text-lg leading-5 font-medium">
               {review.movie.title}
             </span>
             {review.movie.release_date && (
