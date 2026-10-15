@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AlertTriangleIcon, FilmIcon, StarIcon, UserIcon } from "lucide-react";
+import { FilmIcon, StarIcon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { timeAgo, tmdbImage } from "@/lib/utils";
 import { Review } from "@/types";
@@ -89,13 +89,7 @@ export function ReviewCard({ review, showMovie = true }: ReviewCardProps) {
       {review.text && (
         <div className="mt-2">
           {review.hasSpoilers ? (
-            <div>
-              <div className="mb-1.5 flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
-                <AlertTriangleIcon className="h-3.5 w-3.5" />
-                <span>Содержит спойлеры</span>
-              </div>
-              <SpoilerToggle text={review.text} />
-            </div>
+            <SpoilerToggle text={review.text} />
           ) : (
             <p className="text-foreground/85 text-sm leading-relaxed whitespace-pre-wrap">
               {review.text}
