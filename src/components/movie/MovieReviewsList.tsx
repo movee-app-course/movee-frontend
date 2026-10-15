@@ -46,7 +46,7 @@ export function MovieReviewsList({
           ))}
         </div>
       ) : (
-        <div className="bg-card/50 rounded-xl border px-4 py-10 text-center">
+        <div className="bg-card/50 mt-15 rounded-xl text-center">
           <p className="text-muted-foreground text-sm">
             Отзывов пока нет. Будьте первым!
           </p>

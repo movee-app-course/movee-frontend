@@ -60,7 +60,7 @@ export function FeedList({
 
   if (items.length === 0) {
     return (
-      <div className="text-muted-foreground bg-card/50 flex flex-col items-center justify-center rounded-xl border px-4 py-12 text-center">
+      <div className="text-muted-foreground bg-card/50 mt-15 flex flex-col items-center justify-center text-center">
         <div className="bg-muted mb-4 rounded-full p-4">
           <svg
             className="text-muted-foreground/50 h-8 w-8"
