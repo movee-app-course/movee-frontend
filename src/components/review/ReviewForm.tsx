@@ -61,20 +61,31 @@ export function ReviewForm({
         {initialScore ? "Обновить отзыв" : "Оценить фильм"}
       </h3>
 
-      <div className="flex items-center gap-2">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
-          <button
-            key={val}
-            type="button"
-            onClick={() => setScore(val)}
-            className="focus:outline-none"
-          >
-            <StarIcon
-              className={`h-6 w-6 transition-colors ${score && score >= val ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground hover:text-yellow-200"}`}
-            />
-          </button>
-        ))}
-        {score && <span className="ml-2 text-lg font-bold">{score}/10</span>}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        {score && (
+          <span className="text-xl font-bold sm:order-2 sm:ml-2 sm:text-lg">
+            {score}/10
+          </span>
+        )}
+
+        <div className="flex items-center gap-2">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
+            <button
+              key={val}
+              type="button"
+              onClick={() => setScore(val)}
+              className="focus:outline-none"
+            >
+              <StarIcon
+                className={`h-6 w-6 transition-colors ${
+                  score && score >= val
+                    ? "fill-yellow-400 text-yellow-400"
+                    : "text-muted-foreground hover:text-yellow-200"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-2">
