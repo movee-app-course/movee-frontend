@@ -113,7 +113,7 @@ export function PopularCarousel({ movies, isLoading }: PopularCarouselProps) {
                     </div>
                   </div>
                   <h3
-                    className="mt-2 line-clamp-1 text-sm font-medium group-hover:underline"
+                    className="mt-2 truncate text-sm font-medium group-hover:underline"
                     title={movie.title}
                   >
                     {movie.title}
