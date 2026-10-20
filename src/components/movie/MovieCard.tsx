@@ -45,7 +45,7 @@ export function MovieCard({ movie }: MovieCardProps) {
         </div>
         <div className="p-3">
           <h3
-            className="line-clamp-2 text-sm leading-tight font-semibold"
+            className="line-clamp-1 text-sm leading-tight font-semibold break-all"
             title={movie.title}
           >
             {movie.title}
