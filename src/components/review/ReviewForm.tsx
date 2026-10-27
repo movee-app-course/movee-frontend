@@ -33,6 +33,7 @@ export function ReviewForm({
   initialSpoilers,
 }: ReviewFormProps) {
   const [score, setScore] = useState<number | undefined>(initialScore);
+  const [hoverScore, setHoverScore] = useState<number | undefined>();
   const [text, setText] = useState(initialText || "");
   const [hasSpoilers, setHasSpoilers] = useState(initialSpoilers || false);
 
@@ -62,11 +63,9 @@ export function ReviewForm({
       </h3>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        {score && (
-          <span className="text-xl font-bold sm:order-2 sm:ml-2 sm:text-lg">
-            {score}/10
-          </span>
-        )}
+        <span className="text-xl font-bold sm:order-2 sm:ml-2 sm:text-lg">
+          {hoverScore ?? score ?? 0}/10
+        </span>
 
         <div className="flex items-center gap-2">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
@@ -74,10 +73,12 @@ export function ReviewForm({
               key={val}
               type="button"
               onClick={() => setScore(val)}
-              className="focus:outline-none"
+              onMouseEnter={() => setHoverScore(val)}
+              onMouseLeave={() => setHoverScore(undefined)}
+              className="cursor-pointer focus:outline-none"
             >
               <StarIcon
-                className={`h-6 w-6 transition-colors ${
+                className={`h-6 w-6 transition-all hover:scale-115 ${
                   score && score >= val
                     ? "fill-yellow-400 text-yellow-400"
                     : "text-muted-foreground hover:text-yellow-200"
