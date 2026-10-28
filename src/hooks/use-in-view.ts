@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 export function useInView(options: IntersectionObserverInit = {}) {
   const [inView, setInView] = useState(false);
@@ -14,9 +14,12 @@ export function useInView(options: IntersectionObserverInit = {}) {
   useEffect(() => {
     if (!node) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setInView(entry.isIntersecting);
-    }, { root, rootMargin, threshold });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { root, rootMargin, threshold },
+    );
 
     observer.observe(node);
 

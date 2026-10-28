@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description: "Discover ratings and reviews from people you follow on Movee.",
 };
 
-export default function MovieLayout({ children }: { children: React.ReactNode }) {
+export default function MovieLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }

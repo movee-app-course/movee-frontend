@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface SpoilerToggleProps {
   text: string;
@@ -14,14 +14,14 @@ export function SpoilerToggle({ text }: SpoilerToggleProps) {
   if (isVisible) {
     return (
       <div>
-        <p className="whitespace-pre-wrap text-sm">{text}</p>
-        <Button 
-          variant="link" 
-          size="sm" 
+        <p className="text-sm whitespace-pre-wrap">{text}</p>
+        <Button
+          variant="link"
+          size="sm"
           onClick={() => setIsVisible(false)}
-          className="px-0 mt-1 h-auto text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground mt-1 h-auto px-0"
         >
-          <EyeOffIcon className="w-3 h-3 mr-1" />
+          <EyeOffIcon className="mr-1 h-3 w-3" />
           Скрыть спойлер
         </Button>
       </div>
@@ -29,10 +29,12 @@ export function SpoilerToggle({ text }: SpoilerToggleProps) {
   }
 
   return (
-    <div className="bg-muted/50 rounded p-4 text-center border border-dashed border-muted-foreground/30">
-      <p className="text-sm text-muted-foreground mb-2">Этот отзыв содержит спойлеры.</p>
+    <div className="bg-muted/50 border-muted-foreground/30 rounded border border-dashed p-4 text-center">
+      <p className="text-muted-foreground mb-2 text-sm">
+        Этот отзыв содержит спойлеры.
+      </p>
       <Button variant="secondary" size="sm" onClick={() => setIsVisible(true)}>
-        <EyeIcon className="w-4 h-4 mr-2" />
+        <EyeIcon className="mr-2 h-4 w-4" />
         Показать спойлеры
       </Button>
     </div>

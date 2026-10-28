@@ -1,0 +1,30 @@
+# Зависимости
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
+
+# Сборка и кэш
+.next
+dist
+build
+out
+coverage
+.vercel
+
+# Статические файлы
+public
+
+# Автогенерация Next.js / TS
+next-env.d.ts
+*.tsbuildinfo
+
+# Переменные окружения и логи
+.env*
+*.log
+
+# Редакторы и ОС
+.vscode
+.idea
+.DS_Store

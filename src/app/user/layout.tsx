@@ -5,9 +5,14 @@ export const metadata: Metadata = {
     template: "%s — Movee",
     default: "User Profile — Movee",
   },
-  description: "View user profile, reviews, watchlist and social connections on Movee.",
+  description:
+    "View user profile, reviews, watchlist and social connections on Movee.",
 };
 
-export default function UserLayout({ children }: { children: React.ReactNode }) {
+export default function UserLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }

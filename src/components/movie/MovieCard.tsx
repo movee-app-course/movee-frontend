@@ -1,21 +1,23 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Movie } from '@/types';
-import { StarIcon, FilmIcon } from 'lucide-react';
-import { tmdbImage } from '@/lib/utils';
+import Image from "next/image";
+import Link from "next/link";
+import { FilmIcon, StarIcon } from "lucide-react";
+import { tmdbImage } from "@/lib/utils";
+import { Movie } from "@/types";
 
 interface MovieCardProps {
   movie: Movie;
 }
 
 export function MovieCard({ movie }: MovieCardProps) {
-  const year = movie.release_date ? new Date(movie.release_date).getFullYear() : null;
-  const posterUrl = tmdbImage(movie.poster_path, 'w500');
+  const year = movie.release_date
+    ? new Date(movie.release_date).getFullYear()
+    : null;
+  const posterUrl = tmdbImage(movie.poster_path, "w500");
 
   return (
     <Link href={`/movie/${movie.tmdb_id}`} className="group block">
-      <div className="overflow-hidden rounded-xl border bg-card shadow-sm transition-all duration-200 group-hover:shadow-lg group-hover:-translate-y-0.5 group-hover:border-primary/30">
-        <div className="relative aspect-[2/3] w-full bg-muted overflow-hidden">
+      <div className="bg-card group-hover:border-primary/30 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+        <div className="bg-muted relative aspect-[2/3] w-full overflow-hidden">
           {posterUrl ? (
             <Image
               src={posterUrl}
@@ -25,27 +27,30 @@ export function MovieCard({ movie }: MovieCardProps) {
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center w-full h-full text-muted-foreground gap-2">
-              <FilmIcon className="w-10 h-10 opacity-30" />
+            <div className="text-muted-foreground flex h-full w-full flex-col items-center justify-center gap-2">
+              <FilmIcon className="h-10 w-10 opacity-30" />
               <span className="text-xs opacity-50">No Poster</span>
             </div>
           )}
-          {movie.vote_average !== null && movie.vote_average !== undefined && Number(movie.vote_average) > 0 && (
-            <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
-              <StarIcon className="w-3 h-3 fill-amber-400 text-amber-400" />
-              {Number(movie.vote_average).toFixed(1)}
-            </div>
-          )}
+          {movie.vote_average !== null &&
+            movie.vote_average !== undefined &&
+            Number(movie.vote_average) > 0 && (
+              <div className="absolute top-2 right-2 flex items-center gap-1 rounded-lg bg-black/70 px-2 py-1 text-xs font-bold text-white backdrop-blur-sm">
+                <StarIcon className="h-3 w-3 fill-amber-400 text-amber-400" />
+                {Number(movie.vote_average).toFixed(1)}
+              </div>
+            )}
           {/* Gradient overlay on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
         </div>
         <div className="p-3">
-          <h3 className="font-semibold text-sm line-clamp-2 leading-tight" title={movie.title}>
+          <h3
+            className="line-clamp-1 text-sm leading-tight font-semibold break-all"
+            title={movie.title}
+          >
             {movie.title}
           </h3>
-          {year && (
-            <p className="text-xs text-muted-foreground mt-1">{year}</p>
-          )}
+          {year && <p className="text-muted-foreground mt-1 text-xs">{year}</p>}
         </div>
       </div>
     </Link>

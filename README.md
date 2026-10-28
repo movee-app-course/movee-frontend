@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movee — Frontend
 
-## Getting Started
+Клиентская часть веб-сервиса **Movee** — социальной сети для любителей кино (аналог Letterboxd), где пользователи могут вести учет просмотренных фильмов, составлять списки желаемого к просмотру, писать рецензии с оценками и спойлерами, а также следить за активностью друзей.
 
-First, run the development server:
+---
+
+## 🚀 Стек технологий
+
+- **Фреймворк:** [Next.js](https://nextjs.org/) 16 (App Router, React 19)
+- **Язык:** [TypeScript](https://www.typescriptlang.org/)
+- **Стилизация & UI:**
+  - [Tailwind CSS v4](https://tailwindcss.com/)
+  - [shadcn/ui](https://ui.shadcn.com/) / [@base-ui/react](https://base-ui.com/)
+  - [Lucide React](https://lucide.dev/) (иконки)
+  - [next-themes](https://github.com/pacocoursey/next-themes) (светлая, тёмная и системная темы)
+- **Стейт-менеджмент & работа с данными:**
+  - [TanStack React Query v5](https://tanstack.com/query/latest) — серверный стейт и кэширование
+  - [Zustand](https://zustand.docs.pmnd.rs/) — клиентский глобальный стейт (авторизация, сессия)
+  - [Axios](https://axios-http.com/) — HTTP-клиент для взаимодействия с API
+- **Формы и валидация:** [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
+
+---
+
+## 📦 Быстрый старт (Локальная разработка)
+
+Для разработки фронтенда **не требуется** разворачивать локальный бэкенд, PostgreSQL или Docker. Вы можете напрямую подключиться к удаленному Dev-серверу проекта.
+
+### 1. Требования
+
+- [Node.js](https://nodejs.org/) версии 20 или выше
+- Менеджер пакетов `npm` (или `pnpm` / `yarn` / `bun`)
+
+### 2. Клонирование и установка зависимостей
+
+```bash
+git clone <url-репозитория>
+cd client
+npm install
+```
+
+### 3. Настройка переменных окружения
+
+Создайте файл `.env.local` в корне папки `client`:
+
+```bash
+cp .env.example .env.local
+```
+
+Откройте `.env.local` и укажите адрес бэкенда:
+
+- **Вариант 1 (рекомендуемый — удаленный dev-сервер):**  
+  Сервер dev-окружения уже развернут и принимает CORS-запросы с `http://localhost:3000`:
+
+  ```env
+  NEXT_PUBLIC_API_URL=https://dev.movee.website/api
+  ```
+
+- **Вариант 2 (локальный бэкенд):**  
+  Если у вас локально запущен серверный сервис Movee:
+  ```env
+  NEXT_PUBLIC_API_URL=http://localhost:3001/api
+  ```
+
+### 4. Запуск dev-сервера
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+После запуска приложение будет доступно по адресу:  
+👉 **[http://localhost:3000](http://localhost:3000)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Доступные скрипты
 
-## Learn More
+| Команда         | Описание                                                    |
+| :-------------- | :---------------------------------------------------------- |
+| `npm run dev`   | Запуск приложения в режиме разработки с Fast Refresh        |
+| `npm run build` | Сборка оптимизированного продакшен-бандла                   |
+| `npm run start` | Запуск локального продакшен-сервера (после `npm run build`) |
+| `npm run lint`  | Проверка кода линтером ESLint                               |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📂 Структура проекта
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+client/
+├── public/                 # Статические ассеты (иконки, изображения)
+└── src/
+    ├── app/                # Next.js App Router (страницы и лейауты)
+    │   ├── login/          # Страница входа
+    │   ├── register/       # Страница регистрации
+    │   ├── movie/[id]/     # Страница фильма (информация, трейлеры, рецензии)
+    │   ├── profile/        # Личный профиль текущего пользователя
+    │   ├── search/         # Поиск фильмов и пользователей
+    │   ├── user/[id]/      # Публичный профиль других пользователей
+    │   ├── layout.tsx      # Корневой лейаут (провайдеры тем, авторизации, шапка)
+    │   └── page.tsx        # Главная страница (лента активности, популярное)
+    ├── components/         # React-компоненты
+    │   ├── ui/             # Базовые UI-компоненты shadcn (кнопки, диалоги, инпуты)
+    │   ├── feed/           # Компоненты ленты новостей и карусели фильмов
+    │   ├── layout/         # Шапка (Header) и мобильная панель (BottomNav)
+    │   ├── movie/          # Карточки фильмов, списки рецензий, действия с фильмом
+    │   ├── review/         # Формы создания рецензий, карточки отзывов, спойлеры
+    │   └── user/           # Профили пользователей, карточки, подписки
+    ├── hooks/              # Кастомные React-хуки (use-auth, use-movies, use-feed и др.)
+    ├── lib/                # Вспомогательные функции, axios client, React Query клиент
+    ├── stores/             # Zustand-сторы (auth-store)
+    └── types/              # Описания типов TypeScript и API-контрактов
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧩 Добавление UI-компонентов
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+В проекте используется библиотека компонентов [shadcn/ui](https://ui.shadcn.com/). Для добавления новых компонентов используйте CLI:
+
+```bash
+npx shadcn@latest add <component-name>
+```
+
+Например:
+
+```bash
+npx shadcn@latest add dialog
+```

@@ -1,10 +1,10 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function TabLoading({ rows = 3 }: { rows?: number }) {
   return (
     <div className="space-y-4">
       {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="p-4 border rounded-xl space-y-3">
+        <div key={i} className="space-y-3 rounded-xl border p-4">
           <div className="flex items-center gap-3">
             <Skeleton className="h-9 w-9 rounded-full" />
             <div className="space-y-1.5">
