@@ -44,4 +44,9 @@ export const endpoints = {
     personal: `${BASE}/feed/personal`,
     popular: `${BASE}/feed/popular`,
   },
+
+  collections: {
+    general: `${BASE}/collections`,
+    slug: (slug: string) => `${BASE}/collections/${slug}`,
+  },
 } as const;

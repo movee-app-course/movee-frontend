@@ -6,13 +6,15 @@ import { MovieCard } from "@/components/movie/MovieCard";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDebounce } from "@/hooks/use-debounce";
-import { useMovieSearch } from "@/hooks/use-movies";
+import { useCollection, useMovieSearch } from "@/hooks/use-movies";
+import { CollectionCard } from "@/components/collection/CollectionCard";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 400);
 
   const { data: movies, isLoading, isError } = useMovieSearch(debouncedQuery);
+  const { data: collection } = useCollection();
 
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8">
@@ -75,12 +77,18 @@ export default function SearchPage() {
       )}
 
       {/* Empty prompt (no query yet) */}
-      {!debouncedQuery && !isLoading && (
-        <div className="text-muted-foreground flex flex-col items-center justify-center py-16 text-center">
-          <FilmIcon className="mb-3 h-12 w-12 opacity-20" />
-          <p className="text-sm">Начните вводить, чтобы найти фильмы</p>
-        </div>
-      )}
+      {!debouncedQuery &&
+        !isLoading &&
+        !movies &&
+        collection &&
+        collection.length > 0 && (
+          <div className="animate-in-up grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {collection.map((collection) => (
+              <CollectionCard key={collection.id} collection={collection} />
+            ))}
+            <p className="text-sm">Начните вводить, чтобы найти фильмы</p>
+          </div>
+        )}
 
       {/* Results grid */}
       {!isLoading && !isError && movies && movies.length > 0 && (

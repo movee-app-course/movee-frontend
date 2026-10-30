@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
 import { endpoints } from "@/lib/api/endpoints";
-import type { Movie, MovieStats } from "@/types";
+import type { CollectionSummary, Movie, MovieStats } from "@/types";
 import type { RawMovieSearchResponse } from "@/types/api-responses";
 
 // The backend returns raw database rows with snake_case.
@@ -114,6 +114,18 @@ export const useWatchedMutation = (id: number) => {
       queryClient.invalidateQueries({ queryKey: ["movies", id, "stats"] });
       // Invalidate the user's watched list so the profile page reflects the change immediately
       queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+};
+
+export const useCollection = () => {
+  return useQuery({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const res = await apiClient.get<CollectionSummary[]>(
+        endpoints.collections.general,
+      );
+      return res.data;
     },
   });
 };
