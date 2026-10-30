@@ -101,3 +101,22 @@ export interface RegisterPayload {
   displayName: string;
   password: string;
 }
+
+export interface CollectionSummary {
+  id: number;
+  slug: string;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  movieCount: number;
+}
+
+export interface CollectionDetail {
+  id: number;
+  slug: string;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  movieCount: number;
+  movies: Movie[];
+}
